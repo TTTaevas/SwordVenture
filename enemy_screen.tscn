@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://f06seee5et7e"]
+
+[ext_resource type="Script" path="res://enemy_screen.gd" id="1_4muio"]
+[ext_resource type="PackedScene" uid="uid://2lhc2v1sp8vg" path="res://background.tscn" id="2_wk1xv"]
+[ext_resource type="PackedScene" uid="uid://7de2x4o7vekq" path="res://status.tscn" id="3_n718e"]
+
+[node name="Enemy_screen" type="Node2D"]
+script = ExtResource("1_4muio")
+
+[node name="Background" parent="." instance=ExtResource("2_wk1xv")]
+position = Vector2(0, -48)
+
+[node name="Status" parent="." instance=ExtResource("3_n718e")]
