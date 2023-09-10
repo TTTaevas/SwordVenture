@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://dv6j7d1wb4lp8"]
+
+[ext_resource type="Texture2D" uid="uid://2qkltni53yls" path="res://sprites/button.png" id="1_d87om"]
+[ext_resource type="Texture2D" uid="uid://cwqekda54104m" path="res://sprites/button-pressed.png" id="2_ab0kq"]
+[ext_resource type="Texture2D" uid="uid://c6yy4iwyt684a" path="res://sprites/button-disabled.png" id="2_wx7dx"]
+[ext_resource type="Script" path="res://shop_button.gd" id="4_tf2b4"]
+[ext_resource type="FontFile" uid="uid://kr3d464f7640" path="res://NineteenNinetySix-lWzq.ttf" id="4_vxvq5"]
+[ext_resource type="LabelSettings" uid="uid://cpuux455m0mhe" path="res://font.tres" id="5_nhsk4"]
+[ext_resource type="Texture2D" uid="uid://cdbhgrnts5sa3" path="res://sprites/coin.png" id="7_xl1k7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ltf2n"]
+line_spacing = 2.0
+font = ExtResource("4_vxvq5")
+font_size = 20
+
+[node name="Shop_button" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+keep_pressed_outside = true
+texture_normal = ExtResource("1_d87om")
+texture_pressed = ExtResource("2_ab0kq")
+texture_disabled = ExtResource("2_wx7dx")
+script = ExtResource("4_tf2b4")
+
+[node name="Item" type="Label" parent="."]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 8.0
+offset_right = 174.0
+offset_bottom = 31.0
+text = "Item"
+label_settings = SubResource("LabelSettings_ltf2n")
+
+[node name="Price" type="Label" parent="."]
+layout_mode = 0
+offset_left = 111.0
+offset_top = 31.0
+offset_right = 165.0
+offset_bottom = 54.0
+text = "Price"
+label_settings = ExtResource("5_nhsk4")
+
+[node name="GoldSprite" type="Sprite2D" parent="."]
+position = Vector2(177, 38)
+scale = Vector2(0.035, 0.035)
+texture = ExtResource("7_xl1k7")

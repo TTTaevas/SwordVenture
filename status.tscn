@@ -1,11 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://7de2x4o7vekq"]
+[gd_scene load_steps=3 format=3 uid="uid://7de2x4o7vekq"]
 
 [ext_resource type="Texture2D" uid="uid://dwj7nmugh8so0" path="res://sprites/borders.png" id="1_0htye"]
-[ext_resource type="FontFile" uid="uid://kr3d464f7640" path="res://NineteenNinetySix-lWzq.ttf" id="2_5wpvm"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_0pkdr"]
-line_spacing = 2.0
-font = ExtResource("2_5wpvm")
+[ext_resource type="LabelSettings" uid="uid://cpuux455m0mhe" path="res://font.tres" id="2_1a60g"]
 
 [node name="Status" type="Control"]
 layout_mode = 3
@@ -38,7 +34,7 @@ offset_bottom = 100.0
 text = "Enemies:
 0/5
 "
-label_settings = SubResource("LabelSettings_0pkdr")
+label_settings = ExtResource("2_1a60g")
 
 [node name="Zone" type="Label" parent="."]
 layout_mode = 0
@@ -47,4 +43,4 @@ offset_top = 19.0
 offset_right = 135.0
 offset_bottom = 38.0
 text = "Zone: 1"
-label_settings = SubResource("LabelSettings_0pkdr")
+label_settings = ExtResource("2_1a60g")
