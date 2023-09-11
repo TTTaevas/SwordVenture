@@ -1,23 +1,19 @@
 extends TextureButton
 
+signal buy
+
 var psed := false
-var gold := 0
-var price = 3
+
+func _ready():
+	$Item.text = get_parent().i_name
 
 func _process(_delta):
-	gold = get_parent().gold
-	
-	if gold < price:
-		disabled = true
-	elif disabled:
-		disabled = false
-	
 	$Item.position.x = (size.x / 2) - ($Item.size.x / 2)
 	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x
 	$Price.position.x = (size.x / 2) - ($Price.size.x / 2) - (gs_width / 2)
 	$GoldSprite.position.x = $Price.position.x + $Price.size.x + 12
 	
-	$Price.text = "Buy: %s" % price
+	$Price.text = "Buy: %s" % get_parent().price
 	
 	if button_pressed and psed == false:
 		psed = true
@@ -31,4 +27,4 @@ func _process(_delta):
 			i.position.y -= 5
 
 func _pressed():
-	print("aaaaa")
+	buy.emit()

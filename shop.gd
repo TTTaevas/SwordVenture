@@ -1,17 +1,19 @@
 extends Node2D
 
-var shop_entry = preload("res://shop_button.tscn")
+signal gold_change
 
-var gold := 0
+var shop_item = preload("res://shop_item.tscn")
+
+var bought_items = []
 
 func _ready():
-	var item := shop_entry.instantiate()
-	item.find_child("Item").text = "Example item"
+	var item := shop_item.instantiate()
+	item.i_name = "Example item"
+	item.price = 3
+	item.connect("buy", buy)
 	add_child(item)
 
 func _process(_delta):
-	gold = get_parent().find_child("Enemy_screen").gold
-	
 	var screen := get_viewport_rect().size
 	$Background.size.x = screen.x
 	$Background.size.y = screen.y - 300
@@ -19,5 +21,11 @@ func _process(_delta):
 	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x
 	$Gold.position.x = (screen.x / 2) - ($Gold.size.x / 2) - (gs_width / 2)
 	$GoldSprite.position.x = $Gold.position.x + $Gold.size.x + 12
-	$Gold.text = "%s Gold" % gold
+	$Gold.text = "%s Gold" % get_parent().gold
+
+func buy(item, price):
+	gold_change.emit(price)
 	
+	var arr = bought_items.filter(func(i): return i.name != item.name)
+	arr.push_back(item)
+	bought_items = arr

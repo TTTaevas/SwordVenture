@@ -24,6 +24,7 @@ func animate(enemies):
 		
 		for i in len(elements):
 			var e = elements[i]
+			@warning_ignore("integer_division")
 			e.position.x -= speed / ((i / 2) + 1)
 		
 		for i in enemies:

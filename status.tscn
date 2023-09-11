@@ -12,9 +12,9 @@ offset_bottom = 40.0
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 14.0
-offset_top = 14.0
+offset_top = 13.0
 offset_right = 144.0
-offset_bottom = 101.0
+offset_bottom = 102.0
 color = Color(0.34902, 0.184314, 0.203922, 1)
 
 [node name="Border" type="TextureRect" parent="."]

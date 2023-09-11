@@ -1,6 +1,9 @@
 extends Node2D
 
+signal gold_change
+
 var enemy = preload("res://enemy.tscn")
+var max_health = 10
 var zone = 1
 var enemies_to_progress = 5
 var enemies_killed = 0
@@ -8,8 +11,6 @@ var enemies_killed = 0
 var level = 1
 var experience = 0
 var max_exp = 10
-
-var gold = 0
 
 var animation_ongoing := false
 
@@ -24,7 +25,7 @@ func _process(_delta):
 
 func death(e):
 	enemies_killed += 1
-	gold += round(e.max_health / 10)
+	gold_change.emit(max(1, round(e.max_health / 10)))
 	experience += zone
 	$Status.find_child("Enemies").text = "Enemies: 
 		%s/%s" % [enemies_killed, enemies_to_progress]
@@ -54,6 +55,9 @@ func death(e):
 func spawn_monster():
 	var monster := enemy.instantiate()
 	monster.connect("enemy_death", death)
+	var i = round((randf_range(max_health / 1.2, max_health * 1.2)) * zone)
+	monster.max_health = i
+	monster.health = i
 	add_child(monster)
 
 	var max_enemies = floor(get_viewport_rect().size.x / 200)
