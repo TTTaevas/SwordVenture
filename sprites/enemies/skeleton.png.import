@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2pv8vo8hgkqn"
-path="res://.godot/imported/hurtBlob.png-2a68f74220113bac76c34fd1ad4618bd.ctex"
+uid="uid://bq4kv4ieqn7vd"
+path="res://.godot/imported/skeleton.png-ec2d7f5f71975e1348d11a9f0675f3ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/hurtBlob.png"
-dest_files=["res://.godot/imported/hurtBlob.png-2a68f74220113bac76c34fd1ad4618bd.ctex"]
+source_file="res://sprites/enemies/skeleton.png"
+dest_files=["res://.godot/imported/skeleton.png-ec2d7f5f71975e1348d11a9f0675f3ca.ctex"]
 
 [params]
 

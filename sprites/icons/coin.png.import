@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://uoo6llwr07o5"
-path="res://.godot/imported/deadGhost.png-0aa14fd553e60e5a3c335a93a2f8ba7d.ctex"
+uid="uid://dsurnabs8anjd"
+path="res://.godot/imported/coin.png-58f1e02c236fa2919a332df5d2c97ec1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/deadGhost.png"
-dest_files=["res://.godot/imported/deadGhost.png-0aa14fd553e60e5a3c335a93a2f8ba7d.ctex"]
+source_file="res://sprites/icons/coin.png"
+dest_files=["res://.godot/imported/coin.png-58f1e02c236fa2919a332df5d2c97ec1.ctex"]
 
 [params]
 

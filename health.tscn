@@ -1,8 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://8gy7utnbwl6v"]
+[gd_scene load_steps=6 format=3 uid="uid://8gy7utnbwl6v"]
 
 [ext_resource type="Script" path="res://Health.gd" id="1_7ec54"]
+[ext_resource type="Texture2D" uid="uid://chuqjfohskl7s" path="res://sprites/healthbar_empty.png" id="1_ycd3f"]
+[ext_resource type="Texture2D" uid="uid://car6splam6lsu" path="res://sprites/healthbar_full.png" id="2_qn6k8"]
+[ext_resource type="FontFile" uid="uid://kr3d464f7640" path="res://NineteenNinetySix-lWzq.ttf" id="4_a1dqm"]
 
-[node name="Health" type="ProgressBar"]
-offset_right = 175.0
-offset_bottom = 27.0
+[sub_resource type="LabelSettings" id="LabelSettings_tscqr"]
+line_spacing = 2.0
+font = ExtResource("4_a1dqm")
+font_color = Color(0, 0, 0, 1)
+
+[node name="Health" type="TextureProgressBar"]
+offset_right = 183.0
+offset_bottom = 26.0
+value = 50.0
+texture_under = ExtResource("1_ycd3f")
+texture_progress = ExtResource("2_qn6k8")
 script = ExtResource("1_7ec54")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 5.0
+offset_right = 137.0
+offset_bottom = 31.0
+text = "5/10 HP"
+label_settings = SubResource("LabelSettings_tscqr")

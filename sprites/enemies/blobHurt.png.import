@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdx67elwfiqey"
-path="res://.godot/imported/7Hills.png-176549f3b3991a49926d990055a9f84f.ctex"
+uid="uid://p6chrcuux7u2"
+path="res://.godot/imported/blobHurt.png-3219e279b7c0569999f37138966c306b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/7Hills.png"
-dest_files=["res://.godot/imported/7Hills.png-176549f3b3991a49926d990055a9f84f.ctex"]
+source_file="res://sprites/enemies/blobHurt.png"
+dest_files=["res://.godot/imported/blobHurt.png-3219e279b7c0569999f37138966c306b.ctex"]
 
 [params]
 

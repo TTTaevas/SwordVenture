@@ -22,17 +22,18 @@ func createShape(x: int, y: int, offset: int):
 	var blob_shape = RectangleShape2D.new()
 	blob_shape.size = Vector2(x, y)
 	var blob_collision = CollisionShape2D.new()
+	blob_collision.name = "Collision"
 	blob_collision.set_shape(blob_shape)
 	blob_collision.position.y += offset
 	return blob_collision
 
 func _init():
 	var enemies = [
-		{normal = load("res://sprites/blob.png"), hurt = load("res://sprites/hurtBlob.png"), dead = load("res://sprites/deadBlob.png"),
+		{normal = load("res://sprites/enemies/blob.png"), hurt = load("res://sprites/enemies/blobHurt.png"), dead = load("res://sprites/enemies/blobDead.png"),
 		offset = 0, collision = createShape(82, 70, 0)},
-		{normal = load("res://sprites/ghost.png"), hurt = load("res://sprites/hurtGhost.png"), dead = load("res://sprites/deadGhost.png"),
-		offset = -20, collision = createShape(76, 96, 0)},
-		{normal = load("res://sprites/skeleton.png"), hurt = load("res://sprites/hurtSkeleton.png"), dead = load("res://sprites/hurtSkeleton.png"),
+		{normal = load("res://sprites/enemies/ghost.png"), hurt = load("res://sprites/enemies/ghostHurt.png"), dead = load("res://sprites/enemies/ghostDead.png"),
+		offset = -20, collision = createShape(76, 96, -2)},
+		{normal = load("res://sprites/enemies/skeleton.png"), hurt = load("res://sprites/enemies/skeletonHurt.png"), dead = load("res://sprites/enemies/skeletonHurt.png"),
 		offset = -10, collision = createShape(42, 77, 10)},
 	]
 	enemy_sprite = enemies.pick_random()

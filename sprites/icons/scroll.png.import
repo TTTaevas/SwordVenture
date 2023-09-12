@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd8dmp0f13noi"
-path="res://.godot/imported/2Fence.png-b67a0095fa14ff61a62924137d2285e0.ctex"
+uid="uid://cgcv4urueqgpc"
+path="res://.godot/imported/scroll.png-da9fc4a1d7657ecbb03be27049ef230b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/2Fence.png"
-dest_files=["res://.godot/imported/2Fence.png-b67a0095fa14ff61a62924137d2285e0.ctex"]
+source_file="res://sprites/icons/scroll.png"
+dest_files=["res://.godot/imported/scroll.png-da9fc4a1d7657ecbb03be27049ef230b.ctex"]
 
 [params]
 

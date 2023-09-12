@@ -16,12 +16,13 @@ func _ready():
 func _process(_delta):
 	var screen := get_viewport_rect().size
 	$Background.size.x = screen.x
-	$Background.size.y = screen.y - 300
+	$Background.size.y = screen.y - 290
 	
 	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x
+	$Gold.text = "%s Gold" % get_parent().gold
+	$Gold.size = $Gold.get_theme_font("font").get_string_size($Gold.text)
 	$Gold.position.x = (screen.x / 2) - ($Gold.size.x / 2) - (gs_width / 2)
 	$GoldSprite.position.x = $Gold.position.x + $Gold.size.x + 12
-	$Gold.text = "%s Gold" % get_parent().gold
 
 func buy(item, price):
 	gold_change.emit(price)

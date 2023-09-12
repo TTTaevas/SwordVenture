@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmq2jknhwxdv"
-path="res://.godot/imported/hurtGhost.png-e87640fe8a95f8bb8cb76d89b7123a0c.ctex"
+uid="uid://bwb1jlcciwhuu"
+path="res://.godot/imported/3Bushes.png-145a9ffcdde9c390051fb8cb11804d08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/hurtGhost.png"
-dest_files=["res://.godot/imported/hurtGhost.png-e87640fe8a95f8bb8cb76d89b7123a0c.ctex"]
+source_file="res://sprites/background/3Bushes.png"
+dest_files=["res://.godot/imported/3Bushes.png-145a9ffcdde9c390051fb8cb11804d08.ctex"]
 
 [params]
 

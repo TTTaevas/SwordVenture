@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hri024j561u4"
-path="res://.godot/imported/8Sky.png-836c69bee7cf49695fc426e3345f1721.ctex"
+uid="uid://dwx011htku8ow"
+path="res://.godot/imported/skeletonHurt.png-4b9186b8d57943164bb5cf4d62b48926.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/8Sky.png"
-dest_files=["res://.godot/imported/8Sky.png-836c69bee7cf49695fc426e3345f1721.ctex"]
+source_file="res://sprites/enemies/skeletonHurt.png"
+dest_files=["res://.godot/imported/skeletonHurt.png-4b9186b8d57943164bb5cf4d62b48926.ctex"]
 
 [params]
 

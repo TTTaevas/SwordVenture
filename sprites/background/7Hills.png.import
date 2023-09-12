@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwnxvq78ql1ib"
-path="res://.godot/imported/settings.png-c9353b5d9d07a2803b73f979603911a3.ctex"
+uid="uid://daslbahyj5co1"
+path="res://.godot/imported/7Hills.png-ae91f42281e59ff374e56589b0e104ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/settings.png"
-dest_files=["res://.godot/imported/settings.png-c9353b5d9d07a2803b73f979603911a3.ctex"]
+source_file="res://sprites/background/7Hills.png"
+dest_files=["res://.godot/imported/7Hills.png-ae91f42281e59ff374e56589b0e104ed.ctex"]
 
 [params]
 

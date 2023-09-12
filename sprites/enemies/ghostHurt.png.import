@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ffxjxl3o2t7f"
-path="res://.godot/imported/scroll.png-144fd1f917f813d32f69a6536159b84b.ctex"
+uid="uid://th3keowxvkna"
+path="res://.godot/imported/ghostHurt.png-d875c0be65c6f68454e39937baa5453e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/scroll.png"
-dest_files=["res://.godot/imported/scroll.png-144fd1f917f813d32f69a6536159b84b.ctex"]
+source_file="res://sprites/enemies/ghostHurt.png"
+dest_files=["res://.godot/imported/ghostHurt.png-d875c0be65c6f68454e39937baa5453e.ctex"]
 
 [params]
 

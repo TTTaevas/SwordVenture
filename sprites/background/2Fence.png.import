@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca857jv4vonp7"
-path="res://.godot/imported/3Bushes.png-c59154bb364f2c0784695eb9f099573a.ctex"
+uid="uid://c54fesbk88kk"
+path="res://.godot/imported/2Fence.png-99da23d275c003cac4b51b88762938e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/3Bushes.png"
-dest_files=["res://.godot/imported/3Bushes.png-c59154bb364f2c0784695eb9f099573a.ctex"]
+source_file="res://sprites/background/2Fence.png"
+dest_files=["res://.godot/imported/2Fence.png-99da23d275c003cac4b51b88762938e1.ctex"]
 
 [params]
 

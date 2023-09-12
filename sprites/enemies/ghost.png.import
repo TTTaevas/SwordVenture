@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1l7mcmvkb1yo"
-path="res://.godot/imported/blob.png-88a763602f38d26b6c9c769c498af168.ctex"
+uid="uid://0ylinxcf53ey"
+path="res://.godot/imported/ghost.png-04bb1a0e3c16460787a0c691829e5d52.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/blob.png"
-dest_files=["res://.godot/imported/blob.png-88a763602f38d26b6c9c769c498af168.ctex"]
+source_file="res://sprites/enemies/ghost.png"
+dest_files=["res://.godot/imported/ghost.png-04bb1a0e3c16460787a0c691829e5d52.ctex"]
 
 [params]
 

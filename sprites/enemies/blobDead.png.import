@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://i2k1brxchbgi"
-path="res://.godot/imported/1Tiles.png-0c8c237163259402a1861746d61fd3d8.ctex"
+uid="uid://do5s5gut43c72"
+path="res://.godot/imported/blobDead.png-c13008e7e81fd220f126448a8709513d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/1Tiles.png"
-dest_files=["res://.godot/imported/1Tiles.png-0c8c237163259402a1861746d61fd3d8.ctex"]
+source_file="res://sprites/enemies/blobDead.png"
+dest_files=["res://.godot/imported/blobDead.png-c13008e7e81fd220f126448a8709513d.ctex"]
 
 [params]
 

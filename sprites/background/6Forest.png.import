@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpfyd0nionswk"
-path="res://.godot/imported/potion.png-e55922c173fa2b1221120a963b47c884.ctex"
+uid="uid://cngscl4ofw3do"
+path="res://.godot/imported/6Forest.png-97c4d54ec78ddf1f7803f03df9791913.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/potion.png"
-dest_files=["res://.godot/imported/potion.png-e55922c173fa2b1221120a963b47c884.ctex"]
+source_file="res://sprites/background/6Forest.png"
+dest_files=["res://.godot/imported/6Forest.png-97c4d54ec78ddf1f7803f03df9791913.ctex"]
 
 [params]
 

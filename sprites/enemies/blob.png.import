@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1jxk5jeijfr1"
-path="res://.godot/imported/5BackBushes.png-6128a3ad2f4e31e3ad8f72506541312a.ctex"
+uid="uid://cmsl7im5gmgrn"
+path="res://.godot/imported/blob.png-72fdfc1cd55d321f3383acb876f21e07.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/5BackBushes.png"
-dest_files=["res://.godot/imported/5BackBushes.png-6128a3ad2f4e31e3ad8f72506541312a.ctex"]
+source_file="res://sprites/enemies/blob.png"
+dest_files=["res://.godot/imported/blob.png-72fdfc1cd55d321f3383acb876f21e07.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dijw62p71h2v6"
-path="res://.godot/imported/deadBlob.png-a0726d713607f71df6296fcec9c38f50.ctex"
+uid="uid://car6splam6lsu"
+path="res://.godot/imported/healthbar_full.png-bec62285bd6c18989359fd3edd3aa28f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/deadBlob.png"
-dest_files=["res://.godot/imported/deadBlob.png-a0726d713607f71df6296fcec9c38f50.ctex"]
+source_file="res://sprites/healthbar_full.png"
+dest_files=["res://.godot/imported/healthbar_full.png-bec62285bd6c18989359fd3edd3aa28f.ctex"]
 
 [params]
 
