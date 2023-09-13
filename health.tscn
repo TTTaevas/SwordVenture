@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://8gy7utnbwl6v"]
 
-[ext_resource type="Script" path="res://Health.gd" id="1_7ec54"]
 [ext_resource type="Texture2D" uid="uid://chuqjfohskl7s" path="res://sprites/healthbar_empty.png" id="1_ycd3f"]
 [ext_resource type="Texture2D" uid="uid://car6splam6lsu" path="res://sprites/healthbar_full.png" id="2_qn6k8"]
+[ext_resource type="Script" path="res://health.gd" id="3_1nh6o"]
 [ext_resource type="FontFile" uid="uid://kr3d464f7640" path="res://NineteenNinetySix-lWzq.ttf" id="4_a1dqm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tscqr"]
@@ -16,7 +16,7 @@ offset_bottom = 26.0
 value = 50.0
 texture_under = ExtResource("1_ycd3f")
 texture_progress = ExtResource("2_qn6k8")
-script = ExtResource("1_7ec54")
+script = ExtResource("3_1nh6o")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0

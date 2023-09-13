@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://fsm14h585y6t"]
 
-[ext_resource type="Script" path="res://Enemy.gd" id="1_rcq4w"]
+[ext_resource type="Script" path="res://enemy.gd" id="1_rcq4w"]
 
 [node name="Enemy" type="Area2D"]
 position = Vector2(1, 1)

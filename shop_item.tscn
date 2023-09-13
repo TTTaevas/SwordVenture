@@ -19,13 +19,17 @@ offset_right = 360.0
 offset_bottom = 258.0
 color = Color(0.34902, 0.184314, 0.203922, 1)
 
-[node name="Border" type="TextureRect" parent="."]
+[node name="Border" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_right = 387.0
-offset_bottom = 297.0
+offset_right = 1156.0
+offset_bottom = 411.0
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_gwa5r")
-expand_mode = 1
-stretch_mode = 4
+region_rect = Rect2(0, 0, 560.348, 410.214)
+patch_margin_left = 50
+patch_margin_top = 50
+patch_margin_right = 50
+patch_margin_bottom = 50
 
 [node name="Future_Stats" type="Label" parent="."]
 layout_mode = 0
@@ -48,3 +52,10 @@ text = "This is an example description for an example item"
 label_settings = ExtResource("2_06b2j")
 horizontal_alignment = 2
 autowrap_mode = 3
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 198.0
+offset_right = 508.0
+offset_bottom = 238.0

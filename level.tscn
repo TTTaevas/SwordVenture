@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://iwi5ikm0uld6"]
+
+[ext_resource type="Script" path="res://level.gd" id="1_8h12d"]
+[ext_resource type="FontFile" uid="uid://kr3d464f7640" path="res://NineteenNinetySix-lWzq.ttf" id="1_d4lrc"]
+[ext_resource type="Texture2D" uid="uid://ga7tektyktsc" path="res://sprites/expbar_empty.png" id="3_7kiep"]
+[ext_resource type="Texture2D" uid="uid://cj4b26y3wcx88" path="res://sprites/expbar_full.png" id="4_hx12s"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w8lek"]
+line_spacing = 2.0
+font = ExtResource("1_d4lrc")
+font_size = 24
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_25ykc"]
+line_spacing = 2.0
+font = ExtResource("1_d4lrc")
+font_size = 14
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 0)
+
+[node name="Level" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8h12d")
+
+[node name="LevelLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 212.0
+offset_top = 16.0
+offset_right = 305.0
+offset_bottom = 43.0
+text = "Level 0"
+label_settings = SubResource("LabelSettings_w8lek")
+
+[node name="ExperienceBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 203.0
+offset_top = 58.0
+offset_right = 386.0
+offset_bottom = 73.0
+value = 50.0
+texture_under = ExtResource("3_7kiep")
+texture_progress = ExtResource("4_hx12s")
+
+[node name="ExperienceLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 60.0
+offset_right = 359.0
+offset_bottom = 77.0
+text = "50 / 100 XP"
+label_settings = SubResource("LabelSettings_25ykc")
