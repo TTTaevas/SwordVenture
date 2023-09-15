@@ -42,7 +42,7 @@ func death(e):
 	update_enemies_left(enemies_to_progress, enemies_killed)
 	var enemies := find_children("", "Area2D", false, false)
 	
-	if enemies.size() < 0 or enemies.all(func(node): return node.health <= 0):
+	if enemies.size() <= 0 or enemies.all(func(node): return node.health <= 0):
 		await get_tree().create_timer(0.2).timeout
 
 		if enemies_killed >= enemies_to_progress:

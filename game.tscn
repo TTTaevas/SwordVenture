@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://game.gd" id="1_5u8fi"]
 [ext_resource type="PackedScene" uid="uid://f06seee5et7e" path="res://enemy_screen.tscn" id="1_gl7b4"]
-[ext_resource type="PackedScene" uid="uid://pdloxy5lmu86" path="res://shop.tscn" id="2_1ybcm"]
+[ext_resource type="PackedScene" uid="uid://pdloxy5lmu86" path="res://bottom_screen.tscn" id="2_1ybcm"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5u8fi")
 
 [node name="Enemy_screen" parent="." instance=ExtResource("1_gl7b4")]
 
-[node name="Shop" parent="." instance=ExtResource("2_1ybcm")]
+[node name="Bottom_screen" parent="." instance=ExtResource("2_1ybcm")]
 z_index = -10
 position = Vector2(0, 298)

@@ -8,7 +8,7 @@ func _ready():
 	$ExperienceBar.position.y = $LevelLabel.size.y + $LevelLabel.position.y + 5
 	$ExperienceLabel.position.y = ($ExperienceBar.size.y / 4) + $ExperienceBar.position.y - 2
 
-func _process(delta):
+func _process(_delta):
 	global_position.x = (get_viewport_rect().size.x / 2) - (self.size.x)
 	
 	$ExperienceBar.value = get_parent().experience

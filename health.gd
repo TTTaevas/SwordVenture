@@ -2,7 +2,6 @@ extends TextureProgressBar
 
 func _process(_delta):
 	var monster = get_parent()
-	var collision_position = monster.find_child("Collision", false, false).position
 	var new_position := get_viewport_rect().size
 	new_position.x = monster.position.x
 	new_position.x -= size.x / 2

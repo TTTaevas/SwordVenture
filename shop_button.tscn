@@ -44,3 +44,12 @@ label_settings = ExtResource("5_nhsk4")
 position = Vector2(177, 38)
 scale = Vector2(0.035, 0.035)
 texture = ExtResource("7_6trgp")
+
+[node name="Stats" type="Label" parent="."]
+layout_mode = 0
+offset_left = 350.0
+offset_top = 24.0
+offset_right = 459.0
+offset_bottom = 47.0
+text = "Some stats"
+label_settings = ExtResource("5_nhsk4")
