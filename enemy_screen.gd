@@ -10,7 +10,7 @@ var enemies_killed = 0
 
 var level = 1
 var experience = 0
-var max_exp = 10
+var max_exp = 50
 
 var animation_ongoing := false
 
@@ -68,7 +68,7 @@ func update_enemies_left(to_progress: int, killed: int):
 func spawn_monster():
 	var monster := enemy.instantiate()
 	monster.connect("enemy_death", death)
-	var i = round((randf_range(max_health / 1.2, max_health * 1.2)) * zone)
+	var i = round((randf_range(max_health / 1.2, max_health * 1.2)) * (((zone - 1) * 1.66) if zone > 1 else 1))
 	monster.max_health = i
 	monster.health = i
 	add_child(monster)
