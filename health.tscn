@@ -12,7 +12,7 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="Health" type="TextureProgressBar"]
 offset_right = 183.0
-offset_bottom = 26.0
+offset_bottom = 24.0
 value = 50.0
 texture_under = ExtResource("1_ycd3f")
 texture_progress = ExtResource("2_qn6k8")

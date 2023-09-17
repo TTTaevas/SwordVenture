@@ -1,7 +1,5 @@
 extends Control
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	self.position.y = 0
 	$LevelLabel.position.y = 10
@@ -11,11 +9,11 @@ func _ready():
 func _process(_delta):
 	global_position.x = (get_viewport_rect().size.x / 2) - (self.size.x)
 	
-	$ExperienceBar.value = get_parent().experience
-	$ExperienceBar.max_value = get_parent().max_exp
+	$ExperienceBar.value = PlayerVariables.experience
+	$ExperienceBar.max_value = PlayerVariables.max_experience
 	
 	$ExperienceLabel.text = "%s / %s XP" % [$ExperienceBar.value, $ExperienceBar.max_value]
-	$LevelLabel.text = "Level %s" % get_parent().level
+	$LevelLabel.text = "Level %s" % PlayerVariables.level
 	$ExperienceLabel.size = $ExperienceLabel.get_theme_font("font").get_string_size($ExperienceLabel.text)
 	$LevelLabel.size = $LevelLabel.get_theme_font("font").get_string_size($LevelLabel.text)
 	

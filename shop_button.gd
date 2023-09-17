@@ -18,7 +18,7 @@ func _ready():
 	original_dps = dps
 
 func _process(_delta):
-	if get_tree().root.get_node("Game").gold < price:
+	if PlayerVariables.gold < price:
 		disabled = true
 	elif disabled == true:
 		disabled = false

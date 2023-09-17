@@ -3,17 +3,17 @@ extends Node2D
 signal gold_change
 
 var categories = [
-	{"name": "swords", "sprite": "res://sprites/icons/sword.png", "required_level": 2},
-	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 3}, #4
-	{"name": "scrolls", "sprite": "res://sprites/icons/scroll.png", "required_level": 3}, #10
-	{"name": "enchantments", "sprite": "res://sprites/icons/spark.png", "required_level": 3}, #20
+	{"name": "swords", "sprite": "res://sprites/icons/sword.png", "required_level": 2}, #2
+	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 4}, #4
+	{"name": "scrolls", "sprite": "res://sprites/icons/scroll.png", "required_level": 10}, #10
+	{"name": "enchantments", "sprite": "res://sprites/icons/spark.png", "required_level": 20}, #20
 ]
 var shop_category = preload("res://shop_category.tscn")
 
 var items = [
-	{"category": "swords", "price": 5, "dps": 1, "name": "Wooden Stick",
+	{"category": "swords", "price": 5, "dps": 1, "name": "Wooden Stick", #5 #1
 	"description": "A weird stick an old man sold you. It looks very fragile."},
-	{"category": "swords", "price": 30, "dps": 3, "name": "Stone Sword",
+	{"category": "swords", "price": 30, "dps": 3, "name": "Stone Sword", #30
 	"description": "Two rocks assembled on a stick. It's very cubic."},
 	{"category": "swords", "price": 100, "dps": 7, "name": "Iron Sword",
 	"description": "Forged by a blacksmith amateur. You'll have to deal with it."},
@@ -91,7 +91,7 @@ func _process(_delta):
 	$Background.size.y = screen.y - 290
 	
 	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x
-	$Gold.text = "%s Gold" % get_parent().gold
+	$Gold.text = "%s Gold" % PlayerVariables.gold
 	$Gold.size = $Gold.get_theme_font("font").get_string_size($Gold.text)
 	$Gold.position.x = (screen.x / 2) - ($Gold.size.x / 2) - (gs_width / 2)
 	$GoldSprite.position.x = $Gold.position.x + $Gold.size.x + 12
@@ -121,7 +121,7 @@ func _process(_delta):
 		var cat = categories[e]
 		var button = find_child("Shop_category_%s" % cat["name"], false, false)
 		
-		if (button.is_visible() == false and get_tree().root.get_node("Game").find_child("Enemy_screen").level >= button.required_level):
+		if (button.is_visible() == false and PlayerVariables.level >= button.required_level):
 			button.show()
 		
 		var x = $ShopBackground.position.x * (e + 1)

@@ -13,7 +13,12 @@ config_version=5
 config/name="clicker-game"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
+
+[autoload]
+
+PlayerVariables="*res://player_variables.gd"
 
 [display]
 
