@@ -14,10 +14,10 @@ func _process(_delta):
 		if abs(i.position.x) > 640 :
 			i.position.x = 0
 
-func animate(enemies):
+func animate(max_time: float, normal_speed: float, enemies):
 	var elements := get_children()
-	var time := randf_range(0.90, 3.50)
-	var speed := 2.0 + (time / 2)
+	var time := randf_range(0.90, max_time)
+	var speed := normal_speed + (time / 2)
 	
 	while time > 0:
 		await get_tree().create_timer(0.01).timeout

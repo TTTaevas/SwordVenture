@@ -35,7 +35,11 @@ func pacification(method, e):
 		gold_change.emit(max(1, round(e.max_health / 10)))
 		PlayerVariables.experience += PlayerVariables.zone
 	elif method == "flee":
-		PlayerVariables.enemies_to_progress -= 1
+		var enemy = e.duplicate()
+		for property in e.get_property_list():
+			if property.usage == PROPERTY_USAGE_SCRIPT_VARIABLE: 
+				enemy[property.name] = e[property.name]
+		PlayerVariables.enemies_fled.push_back(enemy)
 		
 	var enemies := find_children("enemy_*", "", false, false)
 	if enemies.size() <= 0 or enemies.all(func(enemy): return (enemy.health <= 0 or enemy.fleeing)):
@@ -43,7 +47,7 @@ func pacification(method, e):
 
 		if PlayerVariables.enemies_killed >= PlayerVariables.enemies_to_progress:
 			animation_ongoing = true
-			await find_child("Background").animate(enemies)
+			await find_child("Background").animate(5.50, 0.75, enemies)
 			animation_ongoing = false
 			
 			PlayerVariables.zone += 1
@@ -56,11 +60,26 @@ func pacification(method, e):
 		spawn_enemy()
 
 func spawn_enemy():
-	var enemy := enemy_scene.instantiate()
-	enemy.connect("pacification", pacification)
-	enemy.name = "enemy_%s" % find_children("enemy_*", "", false, false).size()
-	add_child(enemy)
-
+	var enemies := find_children("enemy_*", "", false, false)
+	if PlayerVariables.enemies_fled.size() >= 1 and PlayerVariables.enemies_fled.size() + enemies.size() >= enemies_left:
+		animation_ongoing = true
+		await find_child("Background").animate(1.0, 50.0, enemies)
+		animation_ongoing = false
+		
+		var enemy = PlayerVariables.enemies_fled.front()
+		enemy.fleeing = false
+		enemy.panic = 0
+		enemy.shake = 0
+		enemy.connect("pacification", pacification)
+		add_child(enemy)
+		PlayerVariables.enemies_fled.remove_at(0)
+	else:
+		var enemy := enemy_scene.instantiate()
+		enemy.connect("pacification", pacification)
+		enemy.name = "enemy_%s" % enemy.get_instance_id()
+		add_child(enemy)
+	
 	var max_enemies = floor(get_viewport_rect().size.x / 200)
-	if randi() % 5 == 4 and find_children("enemy_*", "", false, false).size() <min(max_enemies, enemies_left):
+	enemies = find_children("enemy_*", "", false, false)
+	if randi() % 5 == 4 and enemies.size() < min(max_enemies, enemies_left):
 		spawn_enemy()

@@ -17,11 +17,11 @@ var items = [
 	"description": "Two rocks assembled on a stick. It's very cubic."},
 	{"category": "swords", "price": 100, "dps": 7, "name": "Iron Sword",
 	"description": "Forged by a blacksmith amateur. You'll have to deal with it."},
-	{"category": "swords", "price": 400, "dps": 20, "name": "Ruby Sword",
+	{"category": "swords", "price": 800, "dps": 20, "name": "Ruby Sword",
 	"description": "Shines like blood. Is it even made with Ruby?"},
-	{"category": "swords", "price": 2000, "dps": 60, "name": "Fire Sword",
+	{"category": "swords", "price": 3000, "dps": 60, "name": "Fire Sword",
 	"description": "A magical sword made of fire. Useful to cook some skeletons."},
-	{"category": "swords", "price": 5000, "dps": 150, "name": "Sapphire Sword",
+	{"category": "swords", "price": 12000, "dps": 150, "name": "Sapphire Sword",
 	"description": "Infused with magic, this sword shoots waves."},
 ]
 var shop_item = preload("res://shop_button.tscn")
@@ -64,9 +64,10 @@ func _ready():
 			
 			# Cheat for vertical scrollbar
 			var separator = TextureRect.new()
+			separator.z_index = -10
 			separator.name = "separator_%s" % id
 			separator.texture = GradientTexture2D.new()
-			separator.texture.set_height(10 if id != len(filtered_items) else 30)
+			separator.texture.set_height(10 if id != len(filtered_items) else 60)
 			separator.texture.gradient = Gradient.new()
 			separator.texture.gradient.colors = PackedColorArray([Color(0,0,0,0), Color(0,0,0,0)])
 			shop.find_child("VContainer", true, false).add_child(separator)
@@ -77,6 +78,7 @@ func _ready():
 			var l = filtered_items[0]
 			var x = shop.find_children("item_*", "", true, false)[0].get_theme_font("font").get_string_size(l.description).x
 			var separator = TextureRect.new()
+			separator.z_index = -10
 			separator.name = "separator_horizontal"
 			separator.texture = GradientTexture2D.new()
 			separator.texture.set_width(x * 2)
@@ -130,7 +132,7 @@ func _process(_delta):
 		button.position.x = x
 		button.position.y = $ShopBorder.position.y - 18 + (($ShopBorder.scale.y - 0.75) * 18)
 		
-		var shop_items = shops.filter(func(s): return s.category == cat["name"])[0].find_children("item*", "Control", true, false)
+		var shop_items = shops.filter(func(s): return s.category == cat["name"])[0].find_child("VContainer", true, false).get_children().filter(func(i): return "separator" not in i.name)
 		for index in len(shop_items):
 			var item = shop_items[index]
 			item.position.x = 10

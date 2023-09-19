@@ -19,6 +19,7 @@ var latest_click := Time.get_unix_time_from_system()
 var panic := 0
 var shake := 0
 var fleeing := false
+var fled_once := false
 
 var max_health: int
 var health: int
@@ -39,7 +40,9 @@ func createShape(x: int, y: int, offset: int):
 	blob_collision.position.y += offset
 	return blob_collision
 
-func _init():
+func _ready():
+	if max_health > 0:
+		return
 	var enemies = [
 		{normal = load("res://sprites/enemies/blob.png"), hurt = load("res://sprites/enemies/blobHurt.png"), dead = load("res://sprites/enemies/blobDead.png"),
 		offset = 0, collision = createShape(82, 70, 0)},
@@ -50,11 +53,11 @@ func _init():
 	]
 	enemy_sprite = enemies.pick_random()
 	
-	var personalities = ["plain", "coward", "persistent", "caring"]
+	var personalities := ["plain", "coward", "persistent", "caring"]
 	personality = personalities.pick_random()
 	
 	var default_hp = randf_range(PlayerVariables.default_hp * 0.8, PlayerVariables.default_hp * 1.2)
-	health = default_hp * (((PlayerVariables.zone - 1) * 1.66) if PlayerVariables.zone > 1 else 1.0)
+	health = default_hp * (((PlayerVariables.zone - 1) * 1.88) if PlayerVariables.zone > 1 else 1.0)
 	if personality == "persistent":
 		health *= 1.3
 	elif personality == "caring":
@@ -68,8 +71,7 @@ func _init():
 	if personality == "coward":
 		var panic_bar = panicbar.instantiate()
 		add_child(panic_bar)
-
-func _ready():
+	
 	var sprite := Sprite2D.new()
 	sprite.name = "Sprite"
 	sprite.texture = enemy_sprite.normal
@@ -98,8 +100,10 @@ func _process(_delta):
 	while i > p / 2:
 		new_position.x += 200
 		i -= 1
-			
-	global_position.x = new_position.x + shake
+	
+	if personality == "coward":
+		new_position.x += shake
+	global_position.x = new_position.x
 	
 	if health <= 0 and not found_dead:
 		found_dead = true
@@ -107,27 +111,27 @@ func _process(_delta):
 		pacification.emit("death", self)
 		
 	elif personality == "coward" and not fleeing and not found_dead:
-		var dice = floor(randf_range(1, ((100 * health) / max_health) * PlayerVariables.zone))
+		var dice = floor(randf_range(1, ((100 * (health + PlayerVariables.level)) / max_health)))
 		
-		if dice <= (panic * 2):
-			shake += 5 if dice <= (panic) else -shake + -5
+		if dice <= (panic * 3) or fled_once:
+			shake += 2 if dice <= (panic) else -shake + -2
 		if dice == 1:
 			panic += 1
 		if panic == 10:
 			$Sprite.texture = enemy_sprite.get("hurt")
-			$Sprite.set_flip_h(true)
 			fleeing = true
+			fled_once = true
 			var speed := 1.3
-			while position.x > -100:
+			while position.x < get_viewport_rect().size.x + 200:
 				await get_tree().create_timer(0.01).timeout
-				position.x -= speed
+				position.x += speed
 				speed += 0.7
 			pacification.emit("flee", self)
 
 func _input(ev):
 	if ev is InputEventMouseButton and ev.button_index == MOUSE_BUTTON_LEFT:
 		if ev.pressed and mouse_on_sprite and health > 0 and not fleeing:
-			health -= get_parent().level if "level" in get_parent() else 1
+			health -= PlayerVariables.level
 			PlayerVariables.experience += 1
 			
 			var click_time := Time.get_unix_time_from_system()
@@ -135,5 +139,5 @@ func _input(ev):
 			$Sprite.texture = enemy_sprite.get("hurt")
 			
 			await get_tree().create_timer(0.2).timeout
-			if click_time == latest_click and health > 0 and not fleeing:
+			if click_time == latest_click and health > 0 and not fleeing and not fled_once:
 				$Sprite.texture = enemy_sprite.get("normal")

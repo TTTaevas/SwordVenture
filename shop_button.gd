@@ -18,7 +18,7 @@ func _ready():
 	original_dps = dps
 
 func _process(_delta):
-	if PlayerVariables.gold < price:
+	if PlayerVariables.gold < price or level + 1 > PlayerVariables.level:
 		disabled = true
 	elif disabled == true:
 		disabled = false
@@ -28,7 +28,7 @@ func _process(_delta):
 	$Price.position.x = (size.x / 2) - ($Price.size.x / 2) - (gs_width / 2)
 	$GoldSprite.position.x = $Price.position.x + $Price.size.x + 12
 	
-	$Price.text = "%s: %s" % ["Buy" if level == 0 else "Level up", price]
+	$Price.text = "%s: %s" % ["Buy" if level == 0 else "Upgrade", price]
 	
 	if button_pressed and psed == false:
 		psed = true
@@ -44,7 +44,7 @@ func _process(_delta):
 	if level < 1:
 		$Stats.text = "Once equipped, it is able to deal %s damage per second!" % dps
 	else:
-		$Stats.text = "Currently does %s dps, will do %s if you level it up!" % [current_dps, dps]
+		$Stats.text = "Does %s dps, will do %s if you upgrade it! Requires Level %s." % [current_dps, dps, level + 1]
 	
 	$Description.size = $Description.get_theme_font("font").get_string_size($Description.text)
 	$Description.position.x = size.x + 10
