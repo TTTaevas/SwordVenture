@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://mekeu342krgg" path="res://sprites/panicbar_bottom.png" id="1_u44bu"]
 [ext_resource type="Texture2D" uid="uid://dhnnjgx33jfg4" path="res://sprites/panicbar_progress.png" id="3_hrvmn"]
-[ext_resource type="Script" path="res://panic.gd" id="4_pnbcy"]
+[ext_resource type="Script" path="res://scenes/top/panic.gd" id="4_pnbcy"]
 
 [node name="Panic" type="TextureProgressBar"]
 offset_right = 135.0

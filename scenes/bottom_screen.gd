@@ -4,29 +4,34 @@ signal gold_change
 
 var categories = [
 	{"name": "swords", "sprite": "res://sprites/icons/sword.png", "required_level": 2}, #2
-	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 4}, #4
+	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 1}, #4
 	{"name": "scrolls", "sprite": "res://sprites/icons/scroll.png", "required_level": 10}, #10
 	{"name": "enchantments", "sprite": "res://sprites/icons/spark.png", "required_level": 20}, #20
 ]
-var shop_category = preload("res://shop_category.tscn")
+var shop_category = preload("res://scenes/bottom/shop_category.tscn")
 
 var items = [
-	{"category": "swords", "price": 5, "dps": 1, "name": "Wooden Stick", #5 #1
-	"description": "A weird stick an old man sold you. It looks very fragile."},
-	{"category": "swords", "price": 30, "dps": 3, "name": "Stone Sword", #30
-	"description": "Two rocks assembled on a stick. It's very cubic."},
-	{"category": "swords", "price": 100, "dps": 7, "name": "Iron Sword",
-	"description": "Forged by a blacksmith amateur. You'll have to deal with it."},
-	{"category": "swords", "price": 800, "dps": 20, "name": "Ruby Sword",
-	"description": "Shines like blood. Is it even made with Ruby?"},
-	{"category": "swords", "price": 3000, "dps": 60, "name": "Fire Sword",
-	"description": "A magical sword made of fire. Useful to cook some skeletons."},
-	{"category": "swords", "price": 12000, "dps": 150, "name": "Sapphire Sword",
-	"description": "Infused with magic, this sword shoots waves."},
+	{"category": "swords", "price": 5, "dps": 1, "i_name": "Wooden Stick", #5 #1
+	"i_description": "A weird stick an old man sold you. It looks very fragile."},
+	{"category": "swords", "price": 30, "dps": 3, "i_name": "Stone Sword", #30
+	"i_description": "Two rocks assembled on a stick. It's very cubic."},
+	{"category": "swords", "price": 100, "dps": 7, "i_name": "Iron Sword",
+	"i_description": "Forged by a blacksmith amateur. You'll have to deal with it."},
+	{"category": "swords", "price": 800, "dps": 20, "i_name": "Ruby Sword",
+	"i_description": "Shines like blood. Is it even made with Ruby?"},
+	{"category": "swords", "price": 3000, "dps": 60, "i_name": "Fire Sword",
+	"i_description": "A magical sword made of fire. Useful to cook some skeletons."},
+	{"category": "swords", "price": 12000, "dps": 150, "i_name": "Sapphire Sword",
+	"i_description": "Infused with magic, this sword shoots waves."},
+	
+	{"category": "potions", "price": 5000, "duration": 15 * 60, "i_name": "XP Potion",
+	"i_description": "Doubles the XP you gain from monsters for 15 minutes!",
+	"effect": func(): PlayerVariables.xp_effects.push_back(2),
+	"expired_effect": func(): PlayerVariables.xp_effects.remove_at(PlayerVariables.xp_effects.find(2))},
 ]
-var shop_item = preload("res://shop_button.tscn")
+var shop_item = preload("res://scenes/bottom/shop_button.tscn")
 
-var shop_selling = preload("res://shop.tscn")
+var shop_selling = preload("res://scenes/bottom/shop.tscn")
 
 var bought_items = []
 
@@ -55,17 +60,18 @@ func _ready():
 			var item = shop_item.instantiate()
 			item.name = "item_%s" % id
 			item.category = cat["name"]
-			item.i_name = i["name"]
-			item.i_description = i["description"]
-			item.price = i["price"]
-			item.dps = i["dps"]
+			
+			var keys = i.keys()
+			for key in keys:
+				item[key] = i[key]
+			
 			item.connect("buy", buy)
 			shop.find_child("VContainer", true, false).add_child(item)
 			
 			# Cheat for vertical scrollbar
 			var separator = TextureRect.new()
-			separator.z_index = -10
-			separator.name = "separator_%s" % id
+			separator.name = "separator_%s-%s" % [cat["name"], id]
+			separator.mouse_filter = separator.MOUSE_FILTER_IGNORE
 			separator.texture = GradientTexture2D.new()
 			separator.texture.set_height(10 if id != len(filtered_items) else 60)
 			separator.texture.gradient = Gradient.new()
@@ -74,12 +80,12 @@ func _ready():
 		
 		# Cheat for horizontal scrollbar
 		if len(filtered_items) > 0:
-			filtered_items.sort_custom(func(a, b): return len(a.description) > len(b.description))
+			filtered_items.sort_custom(func(a, b): return len(a.i_description) > len(b.i_description))
 			var l = filtered_items[0]
-			var x = shop.find_children("item_*", "", true, false)[0].get_theme_font("font").get_string_size(l.description).x
+			var x = shop.find_children("item_*", "", true, false)[0].get_theme_font("font").get_string_size(l.i_description).x
 			var separator = TextureRect.new()
-			separator.z_index = -10
-			separator.name = "separator_horizontal"
+			separator.name = "separator_%s-horizontal" % cat["name"]
+			separator.mouse_filter = separator.MOUSE_FILTER_IGNORE
 			separator.texture = GradientTexture2D.new()
 			separator.texture.set_width(x * 2)
 			separator.texture.set_height(1)

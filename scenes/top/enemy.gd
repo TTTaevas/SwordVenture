@@ -11,8 +11,8 @@ var enemy_sprite := {
 }
 var mouse_on_sprite := false
 
-var healthbar = preload("res://health.tscn")
-var panicbar = preload("res://panic.tscn")
+var healthbar = preload("res://scenes/top/health.tscn")
+var panicbar = preload("res://scenes/top/panic.tscn")
 var found_dead := false
 var latest_click := Time.get_unix_time_from_system()
 
@@ -111,7 +111,7 @@ func _process(_delta):
 		pacification.emit("death", self)
 		
 	elif personality == "coward" and not fleeing and not found_dead:
-		var dice = floor(randf_range(1, ((100 * (health + PlayerVariables.level)) / max_health)))
+		var dice = floor(randf_range(1, ((100 * (health + int(PlayerVariables.level / 2))) / max_health)))
 		
 		if dice <= (panic * 3) or fled_once:
 			shake += 2 if dice <= (panic) else -shake + -2
@@ -132,7 +132,7 @@ func _input(ev):
 	if ev is InputEventMouseButton and ev.button_index == MOUSE_BUTTON_LEFT:
 		if ev.pressed and mouse_on_sprite and health > 0 and not fleeing:
 			health -= PlayerVariables.level
-			PlayerVariables.experience += 1
+			PlayerVariables.gain_experience(1)
 			
 			var click_time := Time.get_unix_time_from_system()
 			latest_click = click_time

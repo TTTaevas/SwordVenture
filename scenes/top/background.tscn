@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://2lhc2v1sp8vg"]
 
-[ext_resource type="Script" path="res://background.gd" id="1_ls6f0"]
+[ext_resource type="Script" path="res://scenes/top/background.gd" id="1_ls6f0"]
 [ext_resource type="Texture2D" uid="uid://b8gnka63ky5c2" path="res://sprites/background/1Tiles.png" id="2_es3oe"]
 [ext_resource type="Texture2D" uid="uid://c54fesbk88kk" path="res://sprites/background/2Fence.png" id="3_8aaws"]
 [ext_resource type="Texture2D" uid="uid://bwb1jlcciwhuu" path="res://sprites/background/3Bushes.png" id="4_imf26"]
@@ -84,3 +84,10 @@ offset_bottom = 346.0
 texture = ExtResource("9_nsdj1")
 expand_mode = 1
 stretch_mode = 1
+
+[node name="Light" type="DirectionalLight2D" parent="."]
+position = Vector2(315, 161)
+color = Color(0, 0, 0, 1)
+energy = 0.15
+range_z_min = -349
+shadow_color = Color(0, 0, 0, 0.85098)

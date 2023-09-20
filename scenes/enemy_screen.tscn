@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://f06seee5et7e"]
 
-[ext_resource type="Script" path="res://enemy_screen.gd" id="1_4muio"]
-[ext_resource type="PackedScene" uid="uid://2lhc2v1sp8vg" path="res://background.tscn" id="2_wk1xv"]
+[ext_resource type="Script" path="res://scenes/enemy_screen.gd" id="1_4muio"]
+[ext_resource type="PackedScene" uid="uid://2lhc2v1sp8vg" path="res://scenes/top/background.tscn" id="2_wk1xv"]
 [ext_resource type="LabelSettings" uid="uid://cpuux455m0mhe" path="res://font.tres" id="3_giub2"]
-[ext_resource type="PackedScene" uid="uid://iwi5ikm0uld6" path="res://level.tscn" id="4_f8fu2"]
+[ext_resource type="PackedScene" uid="uid://iwi5ikm0uld6" path="res://scenes/top/level.tscn" id="4_f8fu2"]
 
 [node name="Enemy_screen" type="Node2D"]
 script = ExtResource("1_4muio")

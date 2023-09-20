@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://doqgib1stltyo"]
 
-[ext_resource type="Script" path="res://shop.gd" id="1_e3kmj"]
-[ext_resource type="LabelSettings" uid="uid://cpuux455m0mhe" path="res://font.tres" id="2_xu3t6"]
+[ext_resource type="Script" path="res://scenes/bottom/shop.gd" id="1_s5rbp"]
+[ext_resource type="LabelSettings" uid="uid://cpuux455m0mhe" path="res://font.tres" id="2_yye7i"]
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -10,12 +10,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_e3kmj")
+script = ExtResource("1_s5rbp")
 
 [node name="Container" type="ScrollContainer" parent="."]
 layout_mode = 2
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 115.0
+offset_top = 42.0
+offset_right = 155.0
+offset_bottom = 82.0
 
 [node name="VContainer" type="VBoxContainer" parent="Container"]
 layout_mode = 2
@@ -23,8 +25,8 @@ theme_override_constants/separation = 0
 
 [node name="Stats" type="Label" parent="Container/VContainer"]
 layout_mode = 2
-text = "Damage per second: 0
-Damage per attack: 0
-Attacks per second: 0"
-label_settings = ExtResource("2_xu3t6")
+text = "?"
+label_settings = ExtResource("2_yye7i")
 horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 1

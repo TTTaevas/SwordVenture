@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cvloyjjmu7vv2" path="res://sprites/category_closed.png" id="1_d4ew0"]
 [ext_resource type="Texture2D" uid="uid://b5f8vqkn1asb7" path="res://sprites/category_open.png" id="2_jyt82"]
-[ext_resource type="Script" path="res://shop_category.gd" id="3_6al8e"]
+[ext_resource type="Script" path="res://scenes/bottom/shop_category.gd" id="3_6al8e"]
 [ext_resource type="Texture2D" uid="uid://c06bk3klll0wx" path="res://sprites/icons/potion.png" id="4_egnbv"]
 
 [node name="Shop_category" type="TextureButton"]

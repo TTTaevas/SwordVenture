@@ -2,7 +2,7 @@ extends Node2D
 
 signal gold_change
 
-var enemy_scene = preload("res://enemy.tscn")
+var enemy_scene = preload("res://scenes/top/enemy.tscn")
 var enemies_left = 0
 
 var animation_ongoing := false
@@ -23,17 +23,12 @@ func _process(_delta):
 	$Enemies_left.size = $Enemies_left.get_theme_font("font").get_string_size($Enemies_left.text)
 	$Zone.position.x = (get_viewport_rect().size.x / 2) - (($Zone.size.x + $Enemies_left.size.x + 40) / 2)
 	$Enemies_left.position.x = $Zone.position.x + $Zone.size.x + 40
-	
-	if PlayerVariables.experience >= PlayerVariables.max_experience:
-		PlayerVariables.experience = 0
-		PlayerVariables.max_experience = round(PlayerVariables.max_experience * 1.4)
-		PlayerVariables.level += 1
 
 func pacification(method, e):
 	if method == "death":
 		PlayerVariables.enemies_killed += 1
 		gold_change.emit(max(1, round(e.max_health / 10)))
-		PlayerVariables.experience += PlayerVariables.zone
+		PlayerVariables.gain_experience(PlayerVariables.zone)
 	elif method == "flee":
 		var enemy = e.duplicate()
 		for property in e.get_property_list():
@@ -52,7 +47,7 @@ func pacification(method, e):
 			
 			PlayerVariables.zone += 1
 			PlayerVariables.enemies_killed = 0
-			PlayerVariables.enemies_to_progress = 10
+			PlayerVariables.enemies_to_progress = 10 if randi() % 101 < 100 else 25
 		else:
 			for i in enemies:
 				i.free()
