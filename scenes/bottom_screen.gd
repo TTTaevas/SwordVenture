@@ -1,16 +1,16 @@
 extends Node2D
 
 var categories = [
-	{"name": "swords", "sprite": "res://sprites/icons/sword.png", "required_level": 2}, #2
-	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 4}, #4
-	{"name": "scrolls", "sprite": "res://sprites/icons/scroll.png", "required_level": 10}, #10
-	{"name": "enchantments", "sprite": "res://sprites/icons/spark.png", "required_level": 20}, #20
+	{"name": "swords", "sprite": "res://sprites/icons/sword.png", "required_level": 2},
+	{"name": "scrolls", "sprite": "res://sprites/icons/scroll.png", "required_level": 5},
+	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 10},
+	{"name": "enchantments", "sprite": "res://sprites/icons/spark.png", "required_level": 20},
 ]
 
 var items = [
-	{"category": "swords", "price": 5, "dps": 1, "i_name": "Wooden Stick", #5 #1
+	{"category": "swords", "price": 5, "dps": 1, "i_name": "Wooden Stick",
 	"i_description": "A weird stick an old man sold you. It looks very fragile."},
-	{"category": "swords", "price": 30, "dps": 3, "i_name": "Stone Sword", #30
+	{"category": "swords", "price": 30, "dps": 3, "i_name": "Stone Sword",
 	"i_description": "Two rocks assembled on a stick. It's very cubic."},
 	{"category": "swords", "price": 100, "dps": 7, "i_name": "Iron Sword",
 	"i_description": "Forged by a blacksmith amateur. You'll have to deal with it."},
@@ -20,6 +20,21 @@ var items = [
 	"i_description": "A magical sword made of fire. Useful to cook some skeletons."},
 	{"category": "swords", "price": 12000, "dps": 150, "i_name": "Sapphire Sword",
 	"i_description": "Infused with magic, this sword shoots waves."},
+	{"category": "swords", "price": 24000, "dps": 220, "i_name": "Ice Sword",
+	"i_description": "Makes the coins your foes turn into become almost too cold to pick up."},
+	{"category": "swords", "price": 40000, "dps": 400, "i_name": "VERY Sharp Sword",
+	"i_description": "Really cool-looking, but its blade is so edgy it renders any sheath useless..."},
+	{"category": "swords", "price": 100000, "dps": 1000, "i_name": "Titan Sword",
+	"i_description": "You stole this sword from a mighty Titan. Well done."},
+	{"category": "swords", "price": 150000, "dps": 1250, "i_name": "Legendary Sword",
+	"i_description": "Rumoured to be hidden in the Dark Forest's depths, it turns out those rumours were accurate."},
+	
+	{"category": "scrolls", "price": 200, "i_name": "Sword Wielding",
+	"i_description": "Learn to wield more swords at once!",
+	"effect": func(): PlayerVariables.max_equiped_swords += 1},
+	{"category": "scrolls", "price": 500, "i_name": "Practicing Smarter",
+	"i_description": "Learn to gain 50% more experience!",
+	"effect": func(): PlayerVariables.xp_effects.push_front(1.5)},
 	
 	{"category": "potions", "price": 5000, "duration": 15 * 60, "i_name": "Potion of Experience",
 	"i_description": "Doubles the XP you gain from monsters for 15 minutes!",
@@ -85,11 +100,11 @@ func _ready():
 			var x = shop.find_children("Item_*", "", true, false)[0].get_theme_font("font").get_string_size(l.i_description).x
 			separator_h.name = "Separator_%s-horizontal" % cat["name"]
 			separator_h.texture.set_height(2)
-			separator_h.texture.set_width(x * 2)
+			separator_h.texture.set_width(x + 600)
 			shop.find_child("Container", true, false).add_child(separator_h)
 			
 			# Cheat for vertical scrollbar
-			separator_v.name = "Separator_%s-%s" % [cat["name"], separator_v.get_instance_id()]
+			separator_v.name = "Separator_%s-vertical" % cat["name"]
 			separator_v.texture.set_height(50 + (len(filtered_items) * 10))
 			shop.find_child("VContainer", true, false).add_child(separator_v)
 
@@ -99,7 +114,7 @@ func _process(_delta):
 	$Background.size.y = screen.y - 290
 	
 	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x
-	$Gold.text = "%s Gold" % PlayerVariables.gold
+	$Gold.text = "%s Gold" % PlayerVariables.displayNumber(PlayerVariables.gold)
 	$Gold.size = $Gold.get_theme_font("font").get_string_size($Gold.text)
 	$Gold.position.x = (screen.x / 2) - ($Gold.size.x / 2) - (gs_width / 2)
 	$GoldSprite.position.x = $Gold.position.x + $Gold.size.x + 12

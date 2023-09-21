@@ -12,8 +12,11 @@ func _process(_delta):
 	$ExperienceBar.value = PlayerVariables.experience
 	$ExperienceBar.max_value = PlayerVariables.max_experience
 	
-	$ExperienceLabel.text = "%s / %s XP" % [$ExperienceBar.value, $ExperienceBar.max_value]
-	$LevelLabel.text = "Level %s" % PlayerVariables.level
+	$ExperienceLabel.text = "%s / %s XP" % [
+		PlayerVariables.displayNumber($ExperienceBar.value),
+		PlayerVariables.displayNumber($ExperienceBar.max_value)
+	]
+	$LevelLabel.text = "Level %s" % PlayerVariables.displayNumber(PlayerVariables.level)
 	$ExperienceLabel.size = $ExperienceLabel.get_theme_font("font").get_string_size($ExperienceLabel.text)
 	$LevelLabel.size = $LevelLabel.get_theme_font("font").get_string_size($LevelLabel.text)
 	

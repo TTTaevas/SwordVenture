@@ -11,3 +11,9 @@ func _process(_delta):
 			PlayerVariables.damage_per_attack,
 			PlayerVariables.attacks_per_second
 		]
+	elif category == "potions":
+		$Container/VContainer/Stats.text = "Active potions: %s
+		
+		" % [
+			len(find_children("Item*", "", true, false).filter(func(p): return p.level > 0)),
+		]

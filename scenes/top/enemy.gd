@@ -21,8 +21,8 @@ var shake := 0
 var fleeing := false
 var fled_once := false
 
-var max_health: int
-var health: int
+var max_health: float
+var health: float
 
 var personality: String
 
@@ -58,6 +58,7 @@ func _ready():
 	
 	var default_hp = randf_range(PlayerVariables.default_hp * 0.8, PlayerVariables.default_hp * 1.2)
 	health = default_hp * (((PlayerVariables.zone - 1) * 1.88) if PlayerVariables.zone > 1 else 1.0)
+	health *= max(1, float((int(PlayerVariables.zone) - 1) % 10) / 5)
 	if personality == "persistent":
 		health *= 1.3
 	elif personality == "caring":
@@ -111,7 +112,8 @@ func _process(_delta):
 		pacification.emit("death", self)
 		
 	elif personality == "coward" and not fleeing and not found_dead:
-		var dice = floor(randf_range(1, ((100 * (health + int(PlayerVariables.level / 2))) / max_health)))
+		@warning_ignore("integer_division")
+		var dice = max(2, floor(randf_range(1, ((100 * (health + int(PlayerVariables.level / 2))) / max_health))))
 		
 		if dice <= (panic * 3) or fled_once:
 			shake += 2 if dice <= (panic) else -shake + -2

@@ -1,7 +1,7 @@
 extends Node2D
 
-var enemy_scene = preload("res://scenes/top/enemy.tscn")
-var enemies_left = 0
+var enemy_scene := preload("res://scenes/top/enemy.tscn")
+var enemies_left := 0
 
 var animation_ongoing := false
 
@@ -14,8 +14,8 @@ func _ready():
 
 func _process(_delta):
 	enemies_left = PlayerVariables.enemies_to_progress - PlayerVariables.enemies_killed
-	$Enemies_left.text = "%s enem%s left!" % [enemies_left, "ies" if enemies_left > 1 else "y"]
-	$Zone.text = "Zone %s" % PlayerVariables.zone
+	$Enemies_left.text = "%s enem%s left!" % [PlayerVariables.displayNumber(enemies_left), "ies" if enemies_left > 1 else "y"]
+	$Zone.text = "Zone %s" % PlayerVariables.displayNumber(PlayerVariables.zone)
 	
 	$Zone.size = $Zone.get_theme_font("font").get_string_size($Zone.text)
 	$Enemies_left.size = $Enemies_left.get_theme_font("font").get_string_size($Enemies_left.text)
@@ -25,7 +25,7 @@ func _process(_delta):
 func pacification(method, e):
 	if method == "death":
 		PlayerVariables.enemies_killed += 1
-		PlayerVariables.gain_gold(max(1, round(e.max_health / 10)))
+		PlayerVariables.gain_gold(max(1, int(e.max_health / 10)))
 		PlayerVariables.gain_experience(PlayerVariables.zone)
 	elif method == "flee":
 		var enemy = e.duplicate()

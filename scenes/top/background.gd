@@ -4,13 +4,12 @@ func _process(_delta):
 	var screen := get_viewport_rect().size
 	var elements := find_children("", "TextureRect")
 	
-	var size = 640
+	var size := 640
 	while size < screen.x * 3:
 		size += 640
 	
 	for i in elements:
 		i.size.x = size
-		
 		if abs(i.position.x) > 640 :
 			i.position.x = 0
 
@@ -19,8 +18,7 @@ func animate(max_time: float, normal_speed: float, enemies):
 	var time := randf_range(0.90, max_time)
 	var speed := normal_speed + (time / 2)
 	
-	var c = randi() % 3
-	var positive := bool(randi() % 2)
+	var red_objective := float(int(PlayerVariables.zone) % 10) / 15
 	
 	while time > 0:
 		await get_tree().create_timer(0.01).timeout
@@ -42,16 +40,12 @@ func animate(max_time: float, normal_speed: float, enemies):
 			speed /= 1.05
 		time -= 0.01
 		
-		var colors = [$Light.color.r, $Light.color.g, $Light.color.b, $Light.color.a]
-		if positive:
-			colors[c] += randf_range(0.00, 0.0005)
-		else:
-			colors[c] -= randf_range(0.00, 0.0005)
-		if colors[c] > 0.7 and positive:
-			positive = false
-		if colors[c] < -0.2 and not positive:
-			positive = true
-		$Light.set_color(Color(colors[0], colors[1], colors[2], colors[3]))
+		if $Light.color.r < red_objective:
+			var red = $Light.color.r + (speed / 100000)
+			$Light.set_color(Color(red, $Light.color.g, $Light.color.b, $Light.color.a))
+		elif $Light.color.r > red_objective:
+			var red = $Light.color.r - (speed / 20000)
+			$Light.set_color(Color(red, $Light.color.g, $Light.color.b, $Light.color.a))
 	
 	for i in enemies:
 		i.free()

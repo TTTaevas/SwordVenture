@@ -8,10 +8,12 @@ var category: String
 var price: int
 
 # Swords
+var psed_equip := false
 var current_dps := 0
 var dps: int
 var original_dps: int
 var level := 0
+var equiped := false
 
 # Potions
 var duration: int
@@ -27,6 +29,9 @@ func _ready():
 	if category == "potions":
 		self.texture_normal = load("res://sprites/shop/button-yellow.png")
 		self.texture_pressed = load("res://sprites/shop/button-yellow-pressed.png")
+	elif category == "scrolls":
+		self.texture_normal = load("res://sprites/shop/button-red.png")
+		self.texture_pressed = load("res://sprites/shop/button-red-pressed.png")
 
 func _process(_delta):
 	if PlayerVariables.gold < price or duration_left > 0 or level + 1 > PlayerVariables.level:
@@ -42,11 +47,14 @@ func _process(_delta):
 			$Stats.text = ""
 	else:
 		if category == "swords":
+			$Equip.show()
 			$Price.text = "Upgrade: %s" % price
 			$Stats.text = "Does %s dps, will do %s if you upgrade it! Requires Level %s." % [current_dps, dps, level + 1]
-		else:
+		elif category == "potions":
 			$Price.text = "New price: %s" % price
 			$Stats.text = "%s left!" % translate_time(duration_left)
+		else:
+			$Price.text = "Buy: %s" % price
 	
 	$Name.position.x = (size.x / 2) - ($Name.size.x / 2)
 	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x
@@ -55,14 +63,14 @@ func _process(_delta):
 	$GoldSprite.position.x = $Price.position.x + $Price.size.x + 12
 	
 	$Description.size = $Description.get_theme_font("font").get_string_size($Description.text)
-	$Description.position.x = size.x + 10
+	$Description.position.x = size.x + (150 if category == "swords" and level > 0 else 10)
 	$Description.position.y = 15
 	
 	$Stats.size = $Stats.get_theme_font("font").get_string_size($Stats.text)
-	$Stats.position.x = size.x + 10
+	$Stats.position.x = size.x + (150 if category == "swords" and level > 0 else 10)
 	$Stats.position.y = 35
 	
-	var children_on_button := get_children().filter(func(c): return c.name != "Stats" and c.name != "Description")
+	var children_on_button := get_children().filter(func(c): return c.name in ["Name", "Price", "GoldSprite"])
 	if button_pressed and psed == false:
 		psed = true
 		for i in children_on_button:
@@ -71,19 +79,36 @@ func _process(_delta):
 		psed = false
 		for i in children_on_button:
 			i.position.y -= 5
+	
+	if equiped == false:
+		$Equip/Action.text = "Equip!"
+	else:
+		$Equip/Action.text = "Unequip!"
+	$Equip/Action.size = $Equip/Action.get_theme_font("font").get_string_size($Equip/Action.text)
+	$Equip/Action.position.x = ($Equip.size.x - $Equip/Action.size.x) / 2
+		
+	if $Equip.button_pressed and psed_equip == false:
+		psed_equip = true
+		for i in $Equip.get_children():
+			i.position.y += 5
+	elif $Equip.button_pressed == false and psed_equip:
+		psed_equip = false
+		for i in $Equip.get_children():
+			i.position.y -= 5
 
 func _pressed():
 	level += 1
 	PlayerVariables.gold -= price
 	
 	if category == "swords":
-		var arr = PlayerVariables.swords.filter(func(i): return i.i_name != self.i_name)
-		arr.push_back({"i_name": self.i_name, "dps": self.dps})
+		var arr = PlayerVariables.swords.filter(func(s): return s.i_name != self.i_name)
+		arr.push_back({"i_name": self.i_name, "dps": self.dps, "equiped": self.equiped})
 		PlayerVariables.swords = arr
 		
 		price = ceil(price * 1.07)
 		current_dps = dps
 		dps += original_dps
+		
 	elif category == "potions":
 		price = ceil(price * 8.60)
 		duration_left = duration
@@ -94,6 +119,10 @@ func _pressed():
 			if i + 1 == duration:
 				expired_effect.call()
 				level -= 1
+	
+	elif category == "scrolls":
+		price = ceil(price * 20.50)
+		effect.call()
 
 func translate_time(seconds: int):
 	var m := 0
@@ -109,3 +138,14 @@ func translate_time(seconds: int):
 	
 	var se = ("0%s" % s) if s < 10 else str(s) 
 	return "%s:%s" % [m, se]
+
+func _on_equip_pressed():
+	if not equiped:
+		if len(PlayerVariables.swords.filter(func(s): return s.equiped)) + 1 <= PlayerVariables.max_equiped_swords:
+			equiped = true
+	else:
+		equiped = false
+	
+	var arr = PlayerVariables.swords.filter(func(s): return s.i_name != self.i_name)
+	arr.push_back({"i_name": self.i_name, "dps": self.current_dps, "equiped": self.equiped})
+	PlayerVariables.swords = arr

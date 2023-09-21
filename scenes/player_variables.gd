@@ -1,40 +1,57 @@
 extends Node
 
+# Higher is easier
+const game_difficulty = 1
+
 var misc_effects = []
 
 var level := 1
-var experience := 0
-var max_experience := 50
+var experience := 0.0
+var max_experience := 50 / game_difficulty
 var xp_effects := []
 func gain_experience(xp):
 	for effect in xp_effects:
 		xp *= effect
 	
 	while xp > 0:
-		experience += 1
+		experience += 1 * game_difficulty
 		if experience >= max_experience:
 			level += 1
 			experience = 0
 			max_experience = round(PlayerVariables.max_experience * 1.4)
 		xp -= 1
 
-var gold := 0
+var gold := 0.0
 var gold_effects := []
 func gain_gold(g):
 	for effect in gold_effects:
 		g *= effect
-	
 	while g > 0:
-		gold += 1
+		gold += 1 * game_difficulty
 		g -= 1
 
-var zone := 1
+var zone := 1.0
 var enemies_to_progress := 5
 var enemies_killed := 0
 var enemies_fled := []
-var default_hp := 10
+var default_hp := 10.0 / game_difficulty
 
-var damage_per_second := 0
-var damage_per_attack := 0
-var attacks_per_second := 0
+var max_equiped_swords := 1
+var damage_per_second := 0.0
+var damage_per_attack := 0.0
+var attacks_per_second := 0.0
 var swords = []
+
+func displayNumber(num):
+	var x := str(round(num))
+	var y := 0
+	if len(x) < 4:
+		return x
+	
+	while len(x) > 6:
+		y += 1
+		x = x.substr(0, len(x) - 3)
+	
+	var z := len(x) - 3
+	return "%s,%s%s" % [x.substr(0, z), x.substr(z, len(x)),
+	["","K","M","B","T","q","Q","s","S","O","N","d","U","D","!","@","#","$","%","^","&","*"][y]]
