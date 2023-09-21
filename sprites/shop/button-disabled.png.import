@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwj7nmugh8so0"
-path="res://.godot/imported/borders.png-50a63f9a74d2817f4a056348e23f589b.ctex"
+uid="uid://c6yy4iwyt684a"
+path="res://.godot/imported/button-disabled.png-8dc16c3ef97668fc459f534962845ab1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/borders.png"
-dest_files=["res://.godot/imported/borders.png-50a63f9a74d2817f4a056348e23f589b.ctex"]
+source_file="res://sprites/shop/button-disabled.png"
+dest_files=["res://.godot/imported/button-disabled.png-8dc16c3ef97668fc459f534962845ab1.ctex"]
 
 [params]
 

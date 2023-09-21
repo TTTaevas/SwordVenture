@@ -132,6 +132,8 @@ func _input(ev):
 	if ev is InputEventMouseButton and ev.button_index == MOUSE_BUTTON_LEFT:
 		if ev.pressed and mouse_on_sprite and health > 0 and not fleeing:
 			health -= PlayerVariables.level
+			if "Envy's Blood" in PlayerVariables.misc_effects:
+				health -= floor(PlayerVariables.gold * 0.01)
 			PlayerVariables.gain_experience(1)
 			
 			var click_time := Time.get_unix_time_from_system()

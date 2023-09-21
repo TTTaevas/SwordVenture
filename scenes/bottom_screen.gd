@@ -1,14 +1,11 @@
 extends Node2D
 
-signal gold_change
-
 var categories = [
 	{"name": "swords", "sprite": "res://sprites/icons/sword.png", "required_level": 2}, #2
-	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 1}, #4
+	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 4}, #4
 	{"name": "scrolls", "sprite": "res://sprites/icons/scroll.png", "required_level": 10}, #10
 	{"name": "enchantments", "sprite": "res://sprites/icons/spark.png", "required_level": 20}, #20
 ]
-var shop_category = preload("res://scenes/bottom/shop_category.tscn")
 
 var items = [
 	{"category": "swords", "price": 5, "dps": 1, "i_name": "Wooden Stick", #5 #1
@@ -24,74 +21,77 @@ var items = [
 	{"category": "swords", "price": 12000, "dps": 150, "i_name": "Sapphire Sword",
 	"i_description": "Infused with magic, this sword shoots waves."},
 	
-	{"category": "potions", "price": 5000, "duration": 15 * 60, "i_name": "XP Potion",
+	{"category": "potions", "price": 5000, "duration": 15 * 60, "i_name": "Potion of Experience",
 	"i_description": "Doubles the XP you gain from monsters for 15 minutes!",
 	"effect": func(): PlayerVariables.xp_effects.push_back(2),
 	"expired_effect": func(): PlayerVariables.xp_effects.remove_at(PlayerVariables.xp_effects.find(2))},
+	{"category": "potions", "price": 10000, "duration": 10 * 60, "i_name": "Witch's Beverage",
+	"i_description": "For 10 minutes, monsters you kill will turn into 20% more gold!",
+	"effect": func(): PlayerVariables.gold_effects.push_back(1.2),
+	"expired_effect": func(): PlayerVariables.gold_effects.remove_at(PlayerVariables.gold_effects.find(1.2))},
+	{"category": "potions", "price": 15000, "duration": 30 * 60, "i_name": "Envy's Blood",
+	"i_description": "When tapping an enemy, inflict an additional amount of damage worth 1% of your gold, for 30 minutes!",
+	"effect": func(): PlayerVariables.misc_effects.push_back("Envy's Blood"),
+	"expired_effect": func(): PlayerVariables.misc_effects.remove_at(PlayerVariables.gold_effects.find("Envy's Blood"))},
 ]
-var shop_item = preload("res://scenes/bottom/shop_button.tscn")
 
-var shop_selling = preload("res://scenes/bottom/shop.tscn")
-
-var bought_items = []
+var category_button_scene = preload("res://scenes/bottom/category_button.tscn")
+var category_scene = preload("res://scenes/bottom/category.tscn")
+var item_scene = preload("res://scenes/bottom/item.tscn")
 
 func _ready():
 	$Background.position = Vector2(0, 0)
 	
 	for cat in categories:
-		var category = shop_category.instantiate()
+		var category = category_button_scene.instantiate()
 		category.cat_name = cat["name"]
 		category.icon = cat["sprite"]
 		category.required_level = cat["required_level"]
 		category.hide()
 		add_child(category)
 		
-		var shop = shop_selling.instantiate()
-		shop.name = "Shop_selling_%s" % cat["name"]
+		var shop = category_scene.instantiate()
+		shop.name = "Category_%s" % cat["name"]
 		shop.category = cat["name"]
 		shop.hide()
 		add_child(shop)
 		
-		var id = 0
 		var filtered_items = items.filter(func(item): return item.category == cat["name"])
 		for i in filtered_items:
-			id += 1
-		
-			var item = shop_item.instantiate()
-			item.name = "item_%s" % id
+			var item = item_scene.instantiate()
+			item.name = "Item_%s" % i["i_name"]
 			item.category = cat["name"]
 			
 			var keys = i.keys()
 			for key in keys:
 				item[key] = i[key]
-			
-			item.connect("buy", buy)
 			shop.find_child("VContainer", true, false).add_child(item)
-			
-			# Cheat for vertical scrollbar
-			var separator = TextureRect.new()
-			separator.name = "separator_%s-%s" % [cat["name"], id]
-			separator.mouse_filter = separator.MOUSE_FILTER_IGNORE
-			separator.texture = GradientTexture2D.new()
-			separator.texture.set_height(10 if id != len(filtered_items) else 60)
-			separator.texture.gradient = Gradient.new()
-			separator.texture.gradient.colors = PackedColorArray([Color(0,0,0,0), Color(0,0,0,0)])
-			shop.find_child("VContainer", true, false).add_child(separator)
 		
-		# Cheat for horizontal scrollbar
 		if len(filtered_items) > 0:
+			var separator_h = TextureRect.new()
+			separator_h.mouse_filter = separator_h.MOUSE_FILTER_IGNORE
+			separator_h.texture = GradientTexture2D.new()
+			separator_h.texture.gradient = Gradient.new()
+			separator_h.texture.gradient.colors = PackedColorArray([Color(0,0,0,0), Color(0,0,0,0)])
+			var separator_v = TextureRect.new()
+			separator_v.mouse_filter = separator_h.mouse_filter
+			separator_v.texture = GradientTexture2D.new()
+			separator_v.texture.gradient = Gradient.new()
+			separator_v.texture.gradient.colors = PackedColorArray([Color(0,0,0,0), Color(0,0,0,0)])
+			
+			# Cheat for horizontal scrollbar
 			filtered_items.sort_custom(func(a, b): return len(a.i_description) > len(b.i_description))
 			var l = filtered_items[0]
-			var x = shop.find_children("item_*", "", true, false)[0].get_theme_font("font").get_string_size(l.i_description).x
-			var separator = TextureRect.new()
-			separator.name = "separator_%s-horizontal" % cat["name"]
-			separator.mouse_filter = separator.MOUSE_FILTER_IGNORE
-			separator.texture = GradientTexture2D.new()
-			separator.texture.set_width(x * 2)
-			separator.texture.set_height(1)
-			separator.texture.gradient = Gradient.new()
-			separator.texture.gradient.colors = PackedColorArray([Color(0,0,0,0), Color(0,0,0,0)])
-			shop.find_child("Container", true, false).add_child(separator)
+			var x = shop.find_children("Item_*", "", true, false)[0].get_theme_font("font").get_string_size(l.i_description).x
+			separator_h.name = "Separator_%s-horizontal" % cat["name"]
+			separator_h.texture.set_height(2)
+			separator_h.texture.set_width(x * 2)
+			shop.find_child("Container", true, false).add_child(separator_h)
+			
+			# Cheat for vertical scrollbar
+			separator_v.name = "Separator_%s-%s" % [cat["name"], separator_v.get_instance_id()]
+			separator_v.texture.set_height(50 + (len(filtered_items) * 10))
+			shop.find_child("VContainer", true, false).add_child(separator_v)
 
 func _process(_delta):
 	var screen := get_viewport_rect().size
@@ -114,7 +114,7 @@ func _process(_delta):
 	$ShopBackground.size = ($ShopBorder.size - Vector2(i * 2, i * 2)) * $ShopBorder.scale
 	$ShopBackground.position = ($ShopBorder.position) + Vector2(i, i) * $ShopBorder.scale
 	
-	var shops = find_children("Shop_selling_*", "Control", true, false)
+	var shops = find_children("Category_*", "Control", true, false)
 	for shop in shops.filter(func(shop): return shop.is_visible()):
 		var container = shop.find_child("Container")
 		container.size = $ShopBackground.size
@@ -127,7 +127,7 @@ func _process(_delta):
 	
 	for e in len(categories):
 		var cat = categories[e]
-		var button = find_child("Shop_category_%s" % cat["name"], false, false)
+		var button = find_child("Cat_button_%s" % cat["name"], false, false)
 		
 		if (button.is_visible() == false and PlayerVariables.level >= button.required_level):
 			button.show()
@@ -138,15 +138,8 @@ func _process(_delta):
 		button.position.x = x
 		button.position.y = $ShopBorder.position.y - 18 + (($ShopBorder.scale.y - 0.75) * 18)
 		
-		var shop_items = shops.filter(func(s): return s.category == cat["name"])[0].find_child("VContainer", true, false).get_children().filter(func(i): return "separator" not in i.name)
+		var shop_items = shops.filter(func(s): return s.category == cat["name"])[0].find_child("VContainer", true, false).get_children().filter(func(i): return "Separator" not in i.name)
 		for index in len(shop_items):
 			var item = shop_items[index]
 			item.position.x = 10
 			item.position.y = 10 + (index * (item.size.y * 1.2))
-
-func buy(item):
-	gold_change.emit(item.price)
-	
-	var arr = bought_items.filter(func(i): return i.name != item.name)
-	arr.push_back(item)
-	bought_items = arr

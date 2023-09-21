@@ -1,7 +1,5 @@
 extends Node2D
 
-signal gold_change
-
 var enemy_scene = preload("res://scenes/top/enemy.tscn")
 var enemies_left = 0
 
@@ -27,7 +25,7 @@ func _process(_delta):
 func pacification(method, e):
 	if method == "death":
 		PlayerVariables.enemies_killed += 1
-		gold_change.emit(max(1, round(e.max_health / 10)))
+		PlayerVariables.gain_gold(max(1, round(e.max_health / 10)))
 		PlayerVariables.gain_experience(PlayerVariables.zone)
 	elif method == "flee":
 		var enemy = e.duplicate()

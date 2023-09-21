@@ -2,21 +2,14 @@ extends Node2D
 
 var game_clock = 0
 
-func _ready():
-	$Enemy_screen.connect("gold_change", func(i): PlayerVariables.gold += i)
-	$Bottom_screen.connect("gold_change", func(i): PlayerVariables.gold -= i)
-
 func _process(delta):
 	game_clock += delta
 	if int(game_clock) != 0:
 		game_clock = 0
 		
 		var dps := 0.0
-		var items = $Bottom_screen.bought_items
-		
-		var swords = items.filter(func(item): return item.category == "swords" and item.equipped == false)
-		for i in swords:
-			dps += i.dps
+		for sword in PlayerVariables.swords:
+			dps += sword.dps
 		
 		var aps := dps
 		if aps > 100:

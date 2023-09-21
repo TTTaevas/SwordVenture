@@ -25,6 +25,10 @@ PlayerVariables="*res://scenes/player_variables.gd"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 
+[filesystem]
+
+import/blender/enabled=false
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
