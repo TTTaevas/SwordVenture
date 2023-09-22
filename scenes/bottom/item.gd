@@ -89,14 +89,13 @@ func _process(_delta):
 		
 	if $Equip.button_pressed and psed_equip == false:
 		psed_equip = true
-		for i in $Equip.get_children():
-			i.position.y += 5
+		$Equip/Action.position.y += 5
 	elif $Equip.button_pressed == false and psed_equip:
 		psed_equip = false
-		for i in $Equip.get_children():
-			i.position.y -= 5
+		$Equip/Action.position.y -= 5
 
 func _pressed():
+	$SoundBuy.play()
 	level += 1
 	PlayerVariables.gold -= price
 	
@@ -142,8 +141,10 @@ func translate_time(seconds: int):
 func _on_equip_pressed():
 	if not equiped:
 		if len(PlayerVariables.swords.filter(func(s): return s.equiped)) + 1 <= PlayerVariables.max_equiped_swords:
+			$Equip/SoundEquip.play()
 			equiped = true
 	else:
+		$Equip/SoundUnequip.play()
 		equiped = false
 	
 	var arr = PlayerVariables.swords.filter(func(s): return s.i_name != self.i_name)

@@ -1,10 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://fsm14h585y6t"]
+[gd_scene load_steps=3 format=3 uid="uid://fsm14h585y6t"]
 
 [ext_resource type="Script" path="res://scenes/top/enemy.gd" id="1_fh0y6"]
+[ext_resource type="AudioStream" uid="uid://ikwun8yqvhm0" path="res://sounds/enemy_hit.wav" id="2_k3y6m"]
 
 [node name="Enemy" type="Area2D"]
 position = Vector2(1, 1)
 script = ExtResource("1_fh0y6")
+
+[node name="SoundHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_k3y6m")
+volume_db = -10.0
+bus = &"Sounds"
 
 [connection signal="mouse_entered" from="." to="." method="_on_enemy_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_enemy_mouse_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dv6j7d1wb4lp8"]
+[gd_scene load_steps=14 format=3 uid="uid://dv6j7d1wb4lp8"]
 
 [ext_resource type="Texture2D" uid="uid://2qkltni53yls" path="res://sprites/shop/button-green.png" id="1_1kpuc"]
 [ext_resource type="Texture2D" uid="uid://cwqekda54104m" path="res://sprites/shop/button-green-pressed.png" id="2_kfpn4"]
@@ -7,8 +7,11 @@
 [ext_resource type="FontFile" uid="uid://kr3d464f7640" path="res://NineteenNinetySix-lWzq.ttf" id="5_20twl"]
 [ext_resource type="LabelSettings" uid="uid://cpuux455m0mhe" path="res://font.tres" id="6_mtfhp"]
 [ext_resource type="Texture2D" uid="uid://dsurnabs8anjd" path="res://sprites/icons/coin.png" id="7_qq4lu"]
+[ext_resource type="AudioStream" uid="uid://dww8fe3s7pdq2" path="res://sounds/item_bought.wav" id="8_rrp7t"]
 [ext_resource type="Texture2D" uid="uid://ivrqd0p61fog" path="res://sprites/shop/button-small.png" id="8_y3pik"]
 [ext_resource type="Texture2D" uid="uid://co46pbec0dv3s" path="res://sprites/shop/button-small-pressed.png" id="9_epjln"]
+[ext_resource type="AudioStream" uid="uid://bfmwnsibtnumn" path="res://sounds/sword_equip.wav" id="11_rlf4w"]
+[ext_resource type="AudioStream" uid="uid://cqxnfr8f58r2w" path="res://sounds/sword_unequip.wav" id="12_381tj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ltf2n"]
 line_spacing = 2.0
@@ -65,6 +68,11 @@ offset_bottom = 197.0
 text = "The item's epic description!"
 label_settings = ExtResource("6_mtfhp")
 
+[node name="SoundBuy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_rrp7t")
+volume_db = 3.0
+bus = &"Sounds"
+
 [node name="Equip" type="TextureButton" parent="."]
 visible = false
 layout_mode = 0
@@ -84,5 +92,13 @@ offset_right = 115.0
 offset_bottom = 41.0
 text = "equip?!!"
 label_settings = SubResource("LabelSettings_ltf2n")
+
+[node name="SoundEquip" type="AudioStreamPlayer" parent="Equip"]
+stream = ExtResource("11_rlf4w")
+bus = &"Sounds"
+
+[node name="SoundUnequip" type="AudioStreamPlayer" parent="Equip"]
+stream = ExtResource("12_381tj")
+bus = &"Sounds"
 
 [connection signal="pressed" from="Equip" to="." method="_on_equip_pressed"]

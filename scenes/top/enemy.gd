@@ -20,6 +20,7 @@ var panic := 0
 var shake := 0
 var fleeing := false
 var fled_once := false
+var healing := false
 
 var max_health: float
 var health: float
@@ -106,6 +107,15 @@ func _process(_delta):
 		new_position.x += shake
 	global_position.x = new_position.x
 	
+	if personality == "caring" and not fleeing and not found_dead and not healing:
+		var alive = enemies.filter(func(e): return !e.fleeing and !e.found_dead)
+		var injured = alive.filter(func(e): return e.health < e.max_health)
+		for e in injured:
+			var dice_1 = floor(randf_range(1, ((100 * (e.health - float((int(PlayerVariables.zone) - 1) % 10) / 5)) / e.max_health)))
+			var dice_2 = randf_range(50, 100) if e.name == name and alive.size() == 1 else floor(randf_range((100 * (health + float((int(PlayerVariables.zone) - 1) % 10) / 5)) / max_health, 120))
+			if dice_1 == 1 and dice_2 > 90:
+				heal(e, int(e.max_health / (20 if e.personality == "caring" else 10)))
+	
 	if health <= 0 and not found_dead:
 		found_dead = true
 		$Sprite.texture = enemy_sprite.get("dead")
@@ -113,7 +123,7 @@ func _process(_delta):
 		
 	elif personality == "coward" and not fleeing and not found_dead:
 		@warning_ignore("integer_division")
-		var dice = max(2, floor(randf_range(1, ((100 * (health + int(PlayerVariables.level / 2))) / max_health))))
+		var dice = floor(randf_range(1, ((100 * (health + int(PlayerVariables.level / 2))) / max_health)))
 		
 		if dice <= (panic * 3) or fled_once:
 			shake += 2 if dice <= (panic) else -shake + -2
@@ -133,6 +143,7 @@ func _process(_delta):
 func _input(ev):
 	if ev is InputEventMouseButton and ev.button_index == MOUSE_BUTTON_LEFT:
 		if ev.pressed and mouse_on_sprite and health > 0 and not fleeing:
+			$SoundHit.play()
 			health -= PlayerVariables.level
 			if "Envy's Blood" in PlayerVariables.misc_effects:
 				health -= floor(PlayerVariables.gold * 0.01)
@@ -145,3 +156,42 @@ func _input(ev):
 			await get_tree().create_timer(0.2).timeout
 			if click_time == latest_click and health > 0 and not fleeing and not fled_once:
 				$Sprite.texture = enemy_sprite.get("normal")
+
+func heal(enemy: Area2D, amount: int):
+	healing = true
+	var magic_particles := []
+	var healing_particles := []
+	
+	for i in 3:
+		var particle = TextureRect.new()
+		particle.texture = preload("res://sprites/particle_blue.png")
+		particle.position = Vector2(randf_range(-50, 50), randf_range(-25, 50))
+		particle.name = "particle_blue_%s" % particle.get_instance_id()
+		await get_tree().create_timer(0.05).timeout
+		add_child(particle)
+		magic_particles.push_back(particle)
+	for i in 3:
+		var particle = TextureRect.new()
+		particle.texture = preload("res://sprites/particle_green.png")
+		particle.position = Vector2(randf_range(-50, 50), randf_range(-50, 0))
+		particle.name = "particle_green_%s" % particle.get_instance_id()
+		await get_tree().create_timer(0.05).timeout
+		enemy.add_child(particle)
+		healing_particles.push_back(particle)
+	
+	for i in 50:
+		for e in magic_particles:
+			e.position.y -= 1
+		for e in healing_particles:
+			e.position.y += 1
+		await get_tree().create_timer(0.01).timeout
+	
+	for e in magic_particles:
+		e.free()
+	for e in healing_particles:
+		e.free()
+	healing = false
+	
+	if not found_dead and not fleeing and not enemy.found_dead and not enemy.fleeing:
+		if enemy.health < enemy.max_health:
+			enemy.health += max(3, min(enemy.max_health - enemy.health, amount))
