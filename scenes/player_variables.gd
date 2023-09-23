@@ -1,7 +1,7 @@
 extends Node
 
 # Higher is easier
-const game_difficulty = 1
+const game_difficulty = 1.0
 
 var misc_effects = []
 
@@ -19,6 +19,9 @@ func gain_experience(xp):
 			level += 1
 			experience = 0
 			max_experience = round(PlayerVariables.max_experience * 1.4)
+			var sound = get_parent().find_child("SoundLevelUp", true, false)
+			if is_instance_valid(sound):
+				sound.play()
 		xp -= 1
 
 var gold := 0.0

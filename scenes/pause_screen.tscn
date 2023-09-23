@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://dbllvt3yy18so"]
+
+[ext_resource type="Script" path="res://scenes/pause_screen.gd" id="1_e185w"]
+[ext_resource type="Texture2D" uid="uid://dwj7nmugh8so0" path="res://sprites/shop/borders.png" id="1_v0wwf"]
+[ext_resource type="Texture2D" uid="uid://cjumr358b3bl6" path="res://sprites/gray.png" id="2_fop2m"]
+
+[sub_resource type="Gradient" id="Gradient_gn844"]
+colors = PackedColorArray(0.196078, 0, 0, 1, 0.623928, 0.237523, 0.105173, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_efynr"]
+gradient = SubResource("Gradient_gn844")
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6cx2q"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_j86ak"]
+font_size = 32
+
+[node name="Pause_screen" type="Node2D"]
+script = ExtResource("1_e185w")
+
+[node name="Gray" type="TextureRect" parent="."]
+offset_left = 19.0
+offset_top = 16.0
+offset_right = 150.0
+offset_bottom = 129.0
+texture = ExtResource("2_fop2m")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_left = 174.0
+offset_top = 128.0
+offset_right = 238.0
+offset_bottom = 192.0
+texture = SubResource("GradientTexture2D_efynr")
+
+[node name="Border" type="NinePatchRect" parent="."]
+offset_left = 230.0
+offset_top = 178.0
+offset_right = 588.0
+offset_bottom = 460.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_v0wwf")
+region_rect = Rect2(0, 0, 560.348, 410.214)
+patch_margin_left = 50
+patch_margin_top = 50
+patch_margin_right = 50
+patch_margin_bottom = 50
+
+[node name="Menu" type="MarginContainer" parent="."]
+offset_left = 40.0
+offset_top = 246.0
+offset_right = 147.0
+offset_bottom = 333.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Menu/VBoxContainer"]
+layout_mode = 2
+text = "placeholder
+"
+label_settings = SubResource("LabelSettings_6cx2q")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Menu/VBoxContainer"]
+layout_mode = 2
+text = "placeholder"
+label_settings = SubResource("LabelSettings_j86ak")
+horizontal_alignment = 1

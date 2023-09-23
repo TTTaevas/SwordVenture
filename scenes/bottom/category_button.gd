@@ -16,6 +16,7 @@ func _process(_delta):
 func _pressed():
 	var parent = get_parent()
 	if button_pressed and parent.name != "root":
+		$SoundSelect.play()
 		parent.find_child("Category_%s" % cat_name, false, false).show()
 		var categories = parent.find_children("Cat_button*", "", false, false).filter(func(i): return i != self)
 		for category in categories:
@@ -23,5 +24,5 @@ func _pressed():
 				category.set_pressed_no_signal(false)
 				parent.find_child("Category_%s" % category.cat_name, false, false).hide()
 	else:
+		$SoundUnselect.play()
 		parent.find_child("Category_%s" % cat_name, false, false).hide()
-

@@ -1,6 +1,7 @@
 extends Area2D
 
 signal pacification
+signal player_target
 
 var enemy_sprite := {
 	normal = "",
@@ -112,7 +113,7 @@ func _process(_delta):
 		var injured = alive.filter(func(e): return e.health < e.max_health)
 		for e in injured:
 			var dice_1 = floor(randf_range(1, ((100 * (e.health - float((int(PlayerVariables.zone) - 1) % 10) / 5)) / e.max_health)))
-			var dice_2 = randf_range(50, 100) if e.name == name and alive.size() == 1 else floor(randf_range((100 * (health + float((int(PlayerVariables.zone) - 1) % 10) / 5)) / max_health, 120))
+			var dice_2 = randf_range(70, 100) if e.name == name and alive.size() == 1 else floor(randf_range((100 * (health + float((int(PlayerVariables.zone) - 1) % 10) / 5)) / max_health, 120))
 			if dice_1 == 1 and dice_2 > 90:
 				heal(e, int(e.max_health / (20 if e.personality == "caring" else 10)))
 	
@@ -131,6 +132,7 @@ func _process(_delta):
 			panic += 1
 		if panic == 10:
 			$Sprite.texture = enemy_sprite.get("hurt")
+			$SoundFlee.play()
 			fleeing = true
 			fled_once = true
 			var speed := 1.3
@@ -144,6 +146,7 @@ func _input(ev):
 	if ev is InputEventMouseButton and ev.button_index == MOUSE_BUTTON_LEFT:
 		if ev.pressed and mouse_on_sprite and health > 0 and not fleeing:
 			$SoundHit.play()
+			player_target.emit(self)
 			health -= PlayerVariables.level
 			if "Envy's Blood" in PlayerVariables.misc_effects:
 				health -= floor(PlayerVariables.gold * 0.01)
@@ -194,4 +197,5 @@ func heal(enemy: Area2D, amount: int):
 	
 	if not found_dead and not fleeing and not enemy.found_dead and not enemy.fleeing:
 		if enemy.health < enemy.max_health:
+			$SoundHeal.play()
 			enemy.health += max(3, min(enemy.max_health - enemy.health, amount))

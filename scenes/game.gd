@@ -4,6 +4,10 @@ var game_clock := 0.0
 var sword_target: Area2D
 var how_long_sword_target := 0.0
 
+func _ready():
+	$Pause_screen.position = Vector2(0, 0)
+	$Pause_screen.hide()
+
 func _process(delta):
 	game_clock += delta
 	if int(game_clock) != 0:
@@ -44,3 +48,6 @@ func damage_with_sword(timeout: float, damage: float):
 			how_long_sword_target += 1 / PlayerVariables.attacks_per_second
 		
 		(sword_target if randi() % 3 < 30 else enemies.pick_random()).health -= damage
+
+func _on_enemy_screen_player_target(target: Area2D):
+	how_long_sword_target = 1

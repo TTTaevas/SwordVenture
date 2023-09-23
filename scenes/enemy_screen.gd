@@ -1,5 +1,6 @@
 extends Node2D
 
+signal player_target
 var enemy_scene := preload("res://scenes/top/enemy.tscn")
 var enemies_left := 0
 
@@ -64,11 +65,13 @@ func spawn_enemy():
 		enemy.panic = 0
 		enemy.shake = 0
 		enemy.connect("pacification", pacification)
+		enemy.connect("player_target", relay)
 		add_child(enemy)
 		PlayerVariables.enemies_fled.remove_at(0)
 	else:
 		var enemy := enemy_scene.instantiate()
 		enemy.connect("pacification", pacification)
+		enemy.connect("player_target", relay)
 		enemy.name = "enemy_%s" % enemy.get_instance_id()
 		add_child(enemy)
 	
@@ -76,3 +79,6 @@ func spawn_enemy():
 	enemies = find_children("enemy_*", "", false, false)
 	if randi() % 5 == 4 and enemies.size() < min(max_enemies, enemies_left):
 		spawn_enemy()
+
+func relay(target: Area2D):
+	player_target.emit(target)

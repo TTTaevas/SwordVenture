@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/bottom_screen.gd" id="1_f157k"]
 [ext_resource type="LabelSettings" uid="uid://cpuux455m0mhe" path="res://font.tres" id="2_n1mm5"]
 [ext_resource type="Texture2D" uid="uid://dsurnabs8anjd" path="res://sprites/icons/coin.png" id="3_kf4fc"]
-[ext_resource type="Texture2D" uid="uid://dwj7nmugh8so0" path="res://sprites/borders.png" id="4_ur28x"]
+[ext_resource type="Texture2D" uid="uid://dwj7nmugh8so0" path="res://sprites/shop/borders.png" id="4_ur28x"]
 
 [sub_resource type="Gradient" id="Gradient_xl7xx"]
 colors = PackedColorArray(0.227451, 0.113725, 0.12549, 1, 0.117647, 0.054902, 0.0666667, 1)

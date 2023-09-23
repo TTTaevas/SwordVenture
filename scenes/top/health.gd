@@ -1,11 +1,9 @@
 extends TextureProgressBar
 
 func _process(_delta):
-	var monster = get_parent()
-	var new_position := get_viewport_rect().size
-	new_position.x = monster.position.x
+	var monster := get_parent()
+	var new_position = monster.position
 	new_position.x -= size.x / 2
-	new_position.y = monster.position.y
 	new_position.y -= 100
 	global_position = new_position
 	
