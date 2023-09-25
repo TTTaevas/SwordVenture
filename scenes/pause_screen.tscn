@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbllvt3yy18so"]
+[gd_scene load_steps=6 format=3 uid="uid://dbllvt3yy18so"]
 
 [ext_resource type="Script" path="res://scenes/pause_screen.gd" id="1_e185w"]
 [ext_resource type="Texture2D" uid="uid://dwj7nmugh8so0" path="res://sprites/shop/borders.png" id="1_v0wwf"]
@@ -11,12 +11,6 @@ colors = PackedColorArray(0.196078, 0, 0, 1, 0.623928, 0.237523, 0.105173, 1)
 gradient = SubResource("Gradient_gn844")
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
-
-[sub_resource type="LabelSettings" id="LabelSettings_6cx2q"]
-font_size = 48
-
-[sub_resource type="LabelSettings" id="LabelSettings_j86ak"]
-font_size = 32
 
 [node name="Pause_screen" type="Node2D"]
 script = ExtResource("1_e185w")
@@ -54,19 +48,8 @@ offset_top = 246.0
 offset_right = 147.0
 offset_bottom = 333.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+[node name="Container" type="VBoxContainer" parent="Menu"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 alignment = 1
-
-[node name="Label" type="Label" parent="Menu/VBoxContainer"]
-layout_mode = 2
-text = "placeholder
-"
-label_settings = SubResource("LabelSettings_6cx2q")
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="Menu/VBoxContainer"]
-layout_mode = 2
-text = "placeholder"
-label_settings = SubResource("LabelSettings_j86ak")
-horizontal_alignment = 1

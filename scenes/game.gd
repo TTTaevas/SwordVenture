@@ -50,4 +50,5 @@ func damage_with_sword(timeout: float, damage: float):
 		(sword_target if randi() % 3 < 30 else enemies.pick_random()).health -= damage
 
 func _on_enemy_screen_player_target(target: Area2D):
+	sword_target = target
 	how_long_sword_target = 1

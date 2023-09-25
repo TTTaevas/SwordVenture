@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://w5kwib5pdave"]
+
+[ext_resource type="Texture2D" uid="uid://2qkltni53yls" path="res://sprites/shop/button-green.png" id="1_12orx"]
+[ext_resource type="Texture2D" uid="uid://cwqekda54104m" path="res://sprites/shop/button-green-pressed.png" id="2_jm3ff"]
+[ext_resource type="Texture2D" uid="uid://c6yy4iwyt684a" path="res://sprites/shop/button-disabled.png" id="3_ldbvd"]
+[ext_resource type="Script" path="res://scenes/menu_button.gd" id="4_0dkve"]
+[ext_resource type="AudioStream" uid="uid://b3e2urkuym0d5" path="res://sounds/button_select.wav" id="4_j2lgg"]
+[ext_resource type="FontFile" uid="uid://kr3d464f7640" path="res://NineteenNinetySix-lWzq.ttf" id="5_yxyd5"]
+[ext_resource type="LabelSettings" uid="uid://cpuux455m0mhe" path="res://font.tres" id="6_vyp0x"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_icyqn"]
+line_spacing = 2.0
+font = ExtResource("5_yxyd5")
+font_size = 24
+
+[node name="MenuButton" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+keep_pressed_outside = true
+texture_normal = ExtResource("1_12orx")
+texture_pressed = ExtResource("2_jm3ff")
+texture_disabled = ExtResource("3_ldbvd")
+script = ExtResource("4_0dkve")
+
+[node name="Action" type="Label" parent="."]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 10.0
+offset_right = 200.0
+offset_bottom = 37.0
+text = "Action"
+label_settings = SubResource("LabelSettings_icyqn")
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="."]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 33.0
+offset_right = 208.0
+offset_bottom = 52.0
+text = "Description"
+label_settings = ExtResource("6_vyp0x")
+horizontal_alignment = 1
+
+[node name="SoundSelect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_j2lgg")
+bus = &"Sounds"
