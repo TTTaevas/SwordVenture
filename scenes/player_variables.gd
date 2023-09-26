@@ -1,24 +1,24 @@
 extends Node
 
-# Higher is easier
-const game_difficulty = 1.0
+# Lower is easier
+var game_difficulty := 1.0
 
 var misc_effects = []
 
 var level := 1
 var experience := 0.0
-var max_experience := 50 / game_difficulty
+var max_experience := 50 * game_difficulty
 var xp_effects := []
 func gain_experience(xp):
 	for effect in xp_effects:
 		xp *= effect
 	
 	while xp > 0:
-		experience += 1 * game_difficulty
+		experience += 1 / game_difficulty
 		if experience >= max_experience:
 			level += 1
 			experience = 0
-			max_experience = round(PlayerVariables.max_experience * 1.4)
+			max_experience = round(max_experience * 1.4)
 			var sound = get_parent().find_child("SoundLevelUp", true, false)
 			if is_instance_valid(sound):
 				sound.play()
@@ -30,20 +30,20 @@ func gain_gold(g):
 	for effect in gold_effects:
 		g *= effect
 	while g > 0:
-		gold += 1 * game_difficulty
+		gold += 1 / game_difficulty
 		g -= 1
 
 var zone := 1.0
 var enemies_to_progress := 5
 var enemies_killed := 0
 var enemies_fled := []
-var default_hp := 10.0 / game_difficulty
+var default_hp := 10.0 * game_difficulty
 
-var max_equiped_swords := 1
+var max_equipped_swords := 1
+var swords = []
 var damage_per_second := 0.0
 var damage_per_attack := 0.0
 var attacks_per_second := 0.0
-var swords = []
 
 func displayNumber(num):
 	var x := str(round(num))

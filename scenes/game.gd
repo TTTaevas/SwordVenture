@@ -14,7 +14,7 @@ func _process(delta):
 		game_clock = 0
 		
 		var dps := 0.0
-		for sword in PlayerVariables.swords.filter(func(s): return s.equiped):
+		for sword in PlayerVariables.swords.filter(func(s): return s.equipped):
 			dps += sword.dps
 		
 		var aps := dps

@@ -13,11 +13,12 @@ var current_dps := 0
 var dps: int
 var original_dps: int
 var level := 0
-var equiped := false
+var equipped := false
 
 # Potions
 var duration: int
 var duration_left := 0
+var level_to_show: int
 var effect: Callable
 var expired_effect: Callable
 
@@ -40,6 +41,7 @@ func _process(_delta):
 		disabled = false
 	
 	if level < 1:
+		$Equip.hide()
 		$Price.text = "Buy: %s" % price
 		if category == "swords":
 			$Stats.text = "Once equipped, it is able to deal %s damage per second!" % dps
@@ -80,7 +82,7 @@ func _process(_delta):
 		for i in children_on_button:
 			i.position.y -= 5
 	
-	if equiped == false:
+	if equipped == false:
 		$Equip/Action.text = "Equip!"
 	else:
 		$Equip/Action.text = "Unequip!"
@@ -101,7 +103,7 @@ func _pressed():
 	
 	if category == "swords":
 		var arr = PlayerVariables.swords.filter(func(s): return s.i_name != self.i_name)
-		arr.push_back({"i_name": self.i_name, "dps": self.dps, "equiped": self.equiped})
+		arr.push_back({"i_name": self.i_name, "dps": self.dps, "equipped": self.equipped})
 		PlayerVariables.swords = arr
 		
 		price = ceil(price * 1.07)
@@ -139,14 +141,14 @@ func translate_time(seconds: int):
 	return "%s:%s" % [m, se]
 
 func _on_equip_pressed():
-	if not equiped:
-		if len(PlayerVariables.swords.filter(func(s): return s.equiped)) + 1 <= PlayerVariables.max_equiped_swords:
+	if not equipped:
+		if len(PlayerVariables.swords.filter(func(s): return s.equipped)) + 1 <= PlayerVariables.max_equipped_swords:
 			$Equip/SoundEquip.play()
-			equiped = true
+			equipped = true
 	else:
 		$Equip/SoundUnequip.play()
-		equiped = false
+		equipped = false
 	
 	var arr = PlayerVariables.swords.filter(func(s): return s.i_name != self.i_name)
-	arr.push_back({"i_name": self.i_name, "dps": self.current_dps, "equiped": self.equiped})
+	arr.push_back({"i_name": self.i_name, "dps": self.current_dps, "equipped": self.equipped})
 	PlayerVariables.swords = arr

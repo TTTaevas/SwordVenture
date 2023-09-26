@@ -70,11 +70,9 @@ label_settings = ExtResource("6_mtfhp")
 
 [node name="SoundBuy" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_rrp7t")
-volume_db = 3.0
 bus = &"Sounds"
 
 [node name="Equip" type="TextureButton" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 305.0
 offset_right = 440.0
@@ -95,10 +93,12 @@ label_settings = SubResource("LabelSettings_ltf2n")
 
 [node name="SoundEquip" type="AudioStreamPlayer" parent="Equip"]
 stream = ExtResource("11_rlf4w")
+volume_db = -4.0
 bus = &"Sounds"
 
 [node name="SoundUnequip" type="AudioStreamPlayer" parent="Equip"]
 stream = ExtResource("12_381tj")
+volume_db = -4.0
 bus = &"Sounds"
 
 [connection signal="pressed" from="Equip" to="." method="_on_equip_pressed"]

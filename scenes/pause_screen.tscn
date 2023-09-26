@@ -20,6 +20,8 @@ offset_left = 19.0
 offset_top = 16.0
 offset_right = 150.0
 offset_bottom = 129.0
+mouse_filter = 0
+mouse_force_pass_scroll_events = false
 texture = ExtResource("2_fop2m")
 
 [node name="Background" type="TextureRect" parent="."]

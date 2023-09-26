@@ -4,7 +4,6 @@ var categories = [
 	{"name": "swords", "sprite": "res://sprites/icons/sword.png", "required_level": 2},
 	{"name": "scrolls", "sprite": "res://sprites/icons/scroll.png", "required_level": 5},
 	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 10},
-	{"name": "enchantments", "sprite": "res://sprites/icons/spark.png", "required_level": 20},
 ]
 
 var items = [
@@ -31,20 +30,20 @@ var items = [
 	
 	{"category": "scrolls", "price": 200, "i_name": "Sword Wielding",
 	"i_description": "Learn to wield more swords at once!",
-	"effect": func(): PlayerVariables.max_equiped_swords += 1},
+	"effect": func(): PlayerVariables.max_equipped_swords += 1},
 	{"category": "scrolls", "price": 500, "i_name": "Practicing Smarter",
 	"i_description": "Learn to gain 50% more experience!",
 	"effect": func(): PlayerVariables.xp_effects.push_front(1.5)},
 	
-	{"category": "potions", "price": 5000, "duration": 15 * 60, "i_name": "Potion of Experience",
+	{"category": "potions", "level_to_show": 0, "price": 5000, "duration": 15 * 60, "i_name": "Potion of Experience",
 	"i_description": "Doubles the XP you gain from monsters for 15 minutes!",
 	"effect": func(): PlayerVariables.xp_effects.push_back(2),
 	"expired_effect": func(): PlayerVariables.xp_effects.remove_at(PlayerVariables.xp_effects.find(2))},
-	{"category": "potions", "price": 10000, "duration": 10 * 60, "i_name": "Witch's Beverage",
+	{"category": "potions", "level_to_show": 12, "price": 10000, "duration": 10 * 60, "i_name": "Witch's Beverage",
 	"i_description": "For 10 minutes, monsters you kill will turn into 20% more gold!",
 	"effect": func(): PlayerVariables.gold_effects.push_back(1.2),
 	"expired_effect": func(): PlayerVariables.gold_effects.remove_at(PlayerVariables.gold_effects.find(1.2))},
-	{"category": "potions", "price": 15000, "duration": 30 * 60, "i_name": "Envy's Blood",
+	{"category": "potions", "level_to_show": 15, "price": 15000, "duration": 30 * 60, "i_name": "Envy's Blood",
 	"i_description": "When tapping an enemy, inflict an additional amount of damage worth 1% of your gold, for 30 minutes!",
 	"effect": func(): PlayerVariables.misc_effects.push_back("Envy's Blood"),
 	"expired_effect": func(): PlayerVariables.misc_effects.remove_at(PlayerVariables.gold_effects.find("Envy's Blood"))},
@@ -55,6 +54,8 @@ var category_scene = preload("res://scenes/bottom/category.tscn")
 var item_scene = preload("res://scenes/bottom/item.tscn")
 
 func _ready():
+	if get_parent():
+		position.y = 298
 	$Background.position = Vector2(0, 0)
 	
 	for cat in categories:
@@ -153,8 +154,16 @@ func _process(_delta):
 		button.position.x = x
 		button.position.y = $ShopBorder.position.y - 18 + (($ShopBorder.scale.y - 0.75) * 18)
 		
-		var shop_items = shops.filter(func(s): return s.category == cat["name"])[0].find_child("VContainer", true, false).get_children().filter(func(i): return "Separator" not in i.name)
-		for index in len(shop_items):
-			var item = shop_items[index]
-			item.position.x = 10
-			item.position.y = 10 + (index * (item.size.y * 1.2))
+		var shop_container = shops.filter(func(s): return s.category == cat["name"])[0].find_child("VContainer", true, false)
+		var shop_articles = shop_container.get_children().filter(func(a): return "Separator" not in a.name)
+		for index in len(shop_articles):
+			var article = shop_articles[index]
+			article.position.x = 10
+			article.position.y = 10 + (index * (article.size.y * 1.2))
+		
+		var shop_items = shop_articles.filter(func(a): return "Item" in a.name)
+		for item in shop_items:
+			if PlayerVariables.level >= item["level_to_show"]:
+				item.show()
+			else:
+				item.hide()

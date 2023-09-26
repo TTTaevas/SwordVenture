@@ -1,6 +1,7 @@
 extends Control
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	self.position.y = 0
 	$LevelLabel.position.y = 10
 	$ExperienceBar.position.y = $LevelLabel.size.y + $LevelLabel.position.y + 5

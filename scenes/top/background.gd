@@ -1,5 +1,8 @@
 extends Node2D
 
+func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
 func _process(_delta):
 	var screen := get_viewport_rect().size
 	var elements := find_children("", "TextureRect")

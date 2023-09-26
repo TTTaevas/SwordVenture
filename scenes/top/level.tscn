@@ -4,7 +4,7 @@
 [ext_resource type="FontFile" uid="uid://kr3d464f7640" path="res://NineteenNinetySix-lWzq.ttf" id="1_d4lrc"]
 [ext_resource type="Texture2D" uid="uid://ga7tektyktsc" path="res://sprites/expbar_empty.png" id="3_7kiep"]
 [ext_resource type="Texture2D" uid="uid://cj4b26y3wcx88" path="res://sprites/expbar_full.png" id="4_hx12s"]
-[ext_resource type="AudioStream" uid="uid://cigjf4172budn" path="res://sounds/level_up.wav" id="5_i36v7"]
+[ext_resource type="AudioStream" uid="uid://oroswpr0qbp5" path="res://sounds/level_up.wav" id="5_i36v7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_w8lek"]
 line_spacing = 2.0
@@ -61,5 +61,5 @@ label_settings = SubResource("LabelSettings_25ykc")
 
 [node name="SoundLevelUp" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_i36v7")
-volume_db = -5.0
+volume_db = -3.0
 bus = &"Sounds"
