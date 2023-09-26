@@ -1,5 +1,7 @@
 extends TextureButton
 
+var game_clock := 0.0
+
 # Universal
 var psed := false
 var i_name: String
@@ -34,14 +36,24 @@ func _ready():
 		self.texture_normal = load("res://sprites/shop/button-red.png")
 		self.texture_pressed = load("res://sprites/shop/button-red-pressed.png")
 
-func _process(_delta):
+func _process(delta):
+	game_clock += delta
+	if int(game_clock) != 0:
+		game_clock = 0
+		if duration_left > 0:
+			duration_left -= 1
+			if duration_left <= 0:
+				expired_effect.call()
+		
 	if PlayerVariables.gold < price or duration_left > 0 or level + 1 > PlayerVariables.level:
 		disabled = true
 	elif disabled == true:
 		disabled = false
 	
-	if level < 1:
+	if category != "swords" or level <= 0:
 		$Equip.hide()
+	
+	if level < 1:
 		$Price.text = "Buy: %s" % price
 		if category == "swords":
 			$Stats.text = "Once equipped, it is able to deal %s damage per second!" % dps
@@ -114,16 +126,23 @@ func _pressed():
 		price = ceil(price * 8.60)
 		duration_left = duration
 		effect.call()
-		for i in duration_left:
-			await get_tree().create_timer(1).timeout
-			duration_left -= 1
-			if i + 1 == duration:
-				expired_effect.call()
-				level -= 1
 	
 	elif category == "scrolls":
 		price = ceil(price * 20.50)
 		effect.call()
+
+func _on_equip_pressed():
+	if not equipped:
+		if len(PlayerVariables.swords.filter(func(s): return s.equipped)) + 1 <= PlayerVariables.max_equipped_swords:
+			$Equip/SoundEquip.play()
+			equipped = true
+	else:
+		$Equip/SoundUnequip.play()
+		equipped = false
+	
+	var arr = PlayerVariables.swords.filter(func(s): return s.i_name != self.i_name)
+	arr.push_back({"i_name": self.i_name, "dps": self.current_dps, "equipped": self.equipped})
+	PlayerVariables.swords = arr
 
 func translate_time(seconds: int):
 	var m := 0
@@ -139,16 +158,3 @@ func translate_time(seconds: int):
 	
 	var se = ("0%s" % s) if s < 10 else str(s) 
 	return "%s:%s" % [m, se]
-
-func _on_equip_pressed():
-	if not equipped:
-		if len(PlayerVariables.swords.filter(func(s): return s.equipped)) + 1 <= PlayerVariables.max_equipped_swords:
-			$Equip/SoundEquip.play()
-			equipped = true
-	else:
-		$Equip/SoundUnequip.play()
-		equipped = false
-	
-	var arr = PlayerVariables.swords.filter(func(s): return s.i_name != self.i_name)
-	arr.push_back({"i_name": self.i_name, "dps": self.current_dps, "equipped": self.equipped})
-	PlayerVariables.swords = arr

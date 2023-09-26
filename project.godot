@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="SwordVenture"
+config/description="Go through an adventure with this clicker game!"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 boot_splash/show_image=false

@@ -9,9 +9,9 @@ var categories = [
 var items = [
 	{"category": "swords", "price": 5, "dps": 1, "i_name": "Wooden Stick",
 	"i_description": "A weird stick an old man sold you. It looks very fragile."},
-	{"category": "swords", "price": 30, "dps": 3, "i_name": "Stone Sword",
+	{"category": "swords", "price": 50, "dps": 3, "i_name": "Stone Sword",
 	"i_description": "Two rocks assembled on a stick. It's very cubic."},
-	{"category": "swords", "price": 100, "dps": 7, "i_name": "Iron Sword",
+	{"category": "swords", "price": 250, "dps": 7, "i_name": "Iron Sword",
 	"i_description": "Forged by a blacksmith amateur. You'll have to deal with it."},
 	{"category": "swords", "price": 800, "dps": 20, "i_name": "Ruby Sword",
 	"i_description": "Shines like blood. Is it even made with Ruby?"},

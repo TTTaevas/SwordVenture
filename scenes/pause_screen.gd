@@ -17,6 +17,12 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	$Gray.position = Vector2(0, 0)
 	
+	var continue_btn = button_scene.instantiate()
+	continue_btn.action = "Continue"
+	continue_btn.description = "Continue your adventure!"
+	continue_btn.callable = continue_game
+	$Menu/Container.add_child(continue_btn)
+	
 	var save_btn = button_scene.instantiate()
 	save_btn.action = "Save"
 	save_btn.description = "Save your progress!"
@@ -28,15 +34,33 @@ func _ready():
 	load_btn.description = "Load your progress!"
 	load_btn.callable = load_game
 	$Menu/Container.add_child(load_btn)
+	
+	var screen_btn = button_scene.instantiate()
+	screen_btn.action = "Toggle Fullscreen"
+	screen_btn.description = "Decide the way you quest!"
+	screen_btn.callable = screen_game
+	$Menu/Container.add_child(screen_btn)
+	
+	var quit_btn = button_scene.instantiate()
+	quit_btn.action = "Quit"
+	quit_btn.description = "Take a well deserved break!"
+	quit_btn.callable = quit_game
+	quit_btn.texture_normal = load("res://sprites/shop/button-red.png")
+	quit_btn.texture_pressed = load("res://sprites/shop/button-red-pressed.png")
+	$Menu/Container.add_child(quit_btn)
 
 func _process(_delta):
 	var screen := get_viewport_rect().size
 	
 	$Gray.size = screen
-	$Border.position = screen / 4
+	if screen.x < 1080:
+		$Border.position = screen / (6 if screen.y > 720 else 12)
+		$Border.size = (screen / $Border.scale) - ($Border.position * 4)
+	else:
+		$Border.size = Vector2(720 / $Border.scale.x, 480 / $Border.scale.y)
+		$Border.position = (screen / 2) - (($Border.size * $Border.scale) / 2)
 	$Background.position = Vector2($Border.position.x + 20, $Border.position.y + 20)
-	$Border.size = (screen / $Border.scale) / 2
-	$Background.size = Vector2(((screen.x / $Background.scale.x) / 2) - 35, ((screen.y / $Background.scale.y) / 2) - 35)
+	$Background.size = ($Border.size * $Border.scale) - Vector2(35, 35)
 	
 	$Menu.position = $Background.position
 	$Menu.size = $Background.size
@@ -49,6 +73,12 @@ func _input(event):
 			hide()
 		paused = !paused
 		get_tree().paused = paused
+
+func continue_game():
+	paused = false
+	get_tree().paused = false
+	hide()
+	return "Good luck!"
 
 func save_game():
 	var save_file = FileAccess.open("user://save.save", FileAccess.WRITE)
@@ -67,7 +97,7 @@ func save_game():
 	save_file.store_line(JSON.stringify(items))
 	
 	print("(SAVE_GAME FUNCTION) Game has been saved!")
-	return "Game saved!"
+	return "Adventure saved!"
 
 func load_game():
 	if not FileAccess.file_exists("user://save.save"):
@@ -98,4 +128,16 @@ func load_game():
 					item_data = item_data[0]
 					item[prprty] = item_data[prprty]
 	
-	return "Ok!"
+	return "Welcome back!"
+
+func screen_game():
+	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		return "No longer in fullscreen!"
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		return "Now in fullscreen!"
+
+func quit_game():
+	get_tree().quit()
+	return "See you!!"
