@@ -7,8 +7,9 @@ func _process(_delta):
 	new_position.y -= 100
 	global_position = new_position
 	
-	self.value = monster.health
+	self.value = ceil(monster.health)
 	self.max_value = monster.max_health
+	
 	$Label.text = "%s / %s HP" % [
 		PlayerVariables.displayNumber(max(0, monster.health)),
 		PlayerVariables.displayNumber(monster.max_health)

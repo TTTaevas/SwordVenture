@@ -150,7 +150,7 @@ func _input(ev):
 			health -= PlayerVariables.level
 			if "Envy's Blood" in PlayerVariables.misc_effects:
 				health -= floor(PlayerVariables.gold * 0.01)
-			PlayerVariables.gain_experience(1)
+			PlayerVariables.gain_experience(max(1, floor(1 * (max_health / 25))))
 			
 			var click_time := Time.get_unix_time_from_system()
 			latest_click = click_time
@@ -198,4 +198,4 @@ func heal(enemy: Area2D, amount: int):
 	if not found_dead and not fleeing and not enemy.found_dead and not enemy.fleeing:
 		if enemy.health < enemy.max_health:
 			$SoundHeal.play()
-			enemy.health += max(3, min(enemy.max_health - enemy.health, amount))
+			enemy.health += min(enemy.max_health - enemy.health, max(3, amount))

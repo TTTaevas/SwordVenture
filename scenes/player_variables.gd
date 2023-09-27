@@ -43,10 +43,10 @@ var max_equipped_swords := 1
 var swords = []
 var damage_per_second := 0.0
 var damage_per_attack := 0.0
-var attacks_per_second := 0.0
+var attacks_per_second := 100
 
 func displayNumber(num):
-	var x := str(round(num))
+	var x := str(ceil(num))
 	var y := 0
 	if len(x) < 4:
 		return x

@@ -16,6 +16,7 @@ bus = &"Sounds"
 
 [node name="SoundFlee" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_hy842")
+volume_db = -3.0
 bus = &"Sounds"
 
 [node name="SoundHeal" type="AudioStreamPlayer" parent="."]

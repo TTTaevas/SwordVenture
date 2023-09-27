@@ -15,6 +15,7 @@ var current_dps := 0
 var dps: int
 var original_dps: int
 var level := 0
+var level_multi := 1
 var equipped := false
 
 # Potions
@@ -45,7 +46,7 @@ func _process(delta):
 			if duration_left <= 0:
 				expired_effect.call()
 		
-	if PlayerVariables.gold < price or duration_left > 0 or level + 1 > PlayerVariables.level:
+	if PlayerVariables.gold < price or duration_left > 0 or (level * level_multi) + 1 > PlayerVariables.level:
 		disabled = true
 	elif disabled == true:
 		disabled = false
@@ -63,7 +64,7 @@ func _process(delta):
 		if category == "swords":
 			$Equip.show()
 			$Price.text = "Upgrade: %s" % price
-			$Stats.text = "Does %s dps, will do %s if you upgrade it! Requires Level %s." % [current_dps, dps, level + 1]
+			$Stats.text = "Does %s dps, will do %s if you upgrade it! Requires Level %s." % [current_dps, dps, (level * level_multi) + 1]
 		elif category == "potions":
 			$Price.text = "New price: %s" % price
 			$Stats.text = "%s left!" % translate_time(duration_left)

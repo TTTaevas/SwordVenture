@@ -9,6 +9,9 @@ func _ready():
 	$Pause_screen.hide()
 
 func _process(delta):
+	if not $Enemy_screen.is_connected("player_target", choose_player_target):
+		$Enemy_screen.connect("player_target", choose_player_target)
+	
 	game_clock += delta
 	if int(game_clock) != 0:
 		game_clock = 0
@@ -17,16 +20,9 @@ func _process(delta):
 		for sword in PlayerVariables.swords.filter(func(s): return s.equipped):
 			dps += sword.dps
 		
-		var aps := dps
-		if aps > 100:
-			var divider = 10
-			while aps / divider != int(aps / divider) or int(aps / divider) > 100:
-				divider += 1
-			aps /= divider
-		
+		var aps := PlayerVariables.attacks_per_second
 		PlayerVariables.damage_per_second = dps
 		PlayerVariables.damage_per_attack = max(0, dps / aps)
-		PlayerVariables.attacks_per_second = aps
 		for i in aps:
 			damage_with_sword((1.0 / aps) * (i + 1.0), dps / aps)
 
@@ -49,6 +45,6 @@ func damage_with_sword(timeout: float, damage: float):
 		
 		(sword_target if randi() % 3 < 30 else enemies.pick_random()).health -= damage
 
-func _on_enemy_screen_player_target(target: Area2D):
+func choose_player_target(target: Area2D):
 	sword_target = target
 	how_long_sword_target = 1

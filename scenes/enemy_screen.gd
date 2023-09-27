@@ -41,7 +41,7 @@ func pacification(method, e):
 
 		if PlayerVariables.enemies_killed >= PlayerVariables.enemies_to_progress:
 			animation_ongoing = true
-			await find_child("Background").animate(5.50, 0.75, enemies)
+			await find_child("Background").animate(4.00, 0.75, enemies)
 			animation_ongoing = false
 			
 			PlayerVariables.zone += 1

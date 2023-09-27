@@ -61,5 +61,5 @@ label_settings = SubResource("LabelSettings_25ykc")
 
 [node name="SoundLevelUp" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_i36v7")
-volume_db = -3.0
+volume_db = -5.0
 bus = &"Sounds"

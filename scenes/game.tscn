@@ -16,5 +16,3 @@ position = Vector2(0, 298)
 
 [node name="Pause_screen" parent="." instance=ExtResource("4_kjpoq")]
 position = Vector2(744, 17)
-
-[connection signal="player_target" from="Enemy_screen" to="." method="_on_enemy_screen_player_target"]
