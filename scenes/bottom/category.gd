@@ -13,7 +13,9 @@ func _process(_delta):
 		]
 	elif category == "scrolls":
 		var scrolls = find_children("Item*", "", true, false)
-		var levels = scrolls.reduce(func(a, b): return b.level + a.level)
+		var levels = 0
+		for scroll in scrolls:
+			levels += scroll.level
 		scrolls.sort_custom(func(a, b): return b.level < a.level)
 		var s = scrolls[0]
 		$Container/VContainer/Stats.text = "%s

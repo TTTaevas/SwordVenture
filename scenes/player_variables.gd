@@ -4,6 +4,7 @@ extends Node
 var game_difficulty := 1.0
 
 var misc_effects = []
+var tap_effects = []
 
 var level := 1
 var experience := 0.0

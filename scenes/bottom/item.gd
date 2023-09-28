@@ -55,21 +55,21 @@ func _process(delta):
 		$Equip.hide()
 	
 	if level < 1:
-		$Price.text = "Buy: %s" % price
+		$Price.text = "Buy: %s" % PlayerVariables.displayNumber(price)
 		if category == "swords":
-			$Stats.text = "Once equipped, it is able to deal %s damage per second!" % dps
+			$Stats.text = "Once equipped, it is able to deal %s damage per second!" % PlayerVariables.displayNumber(dps)
 		else:
 			$Stats.text = ""
 	else:
 		if category == "swords":
 			$Equip.show()
-			$Price.text = "Upgrade: %s" % price
+			$Price.text = "Upgrade: %s" % PlayerVariables.displayNumber(price)
 			$Stats.text = "Does %s dps, will do %s if you upgrade it! Requires Level %s." % [current_dps, dps, (level * level_multi) + 1]
 		elif category == "potions":
-			$Price.text = "New price: %s" % price
+			$Price.text = "New price: %s" % PlayerVariables.displayNumber(price)
 			$Stats.text = "%s left!" % translate_time(duration_left)
 		else:
-			$Price.text = "Buy: %s" % price
+			$Price.text = "Buy: %s" % PlayerVariables.displayNumber(price)
 	
 	$Name.position.x = (size.x / 2) - ($Name.size.x / 2)
 	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x

@@ -4,7 +4,7 @@ signal pacification
 signal player_target
 
 var enemy_sprite := {
-	normal = "",
+	standing = "",
 	hurt = "",
 	dead = "",
 	offset = 0,
@@ -45,15 +45,29 @@ func createShape(x: int, y: int, offset: int):
 func _ready():
 	if max_health > 0:
 		return
-	var enemies = [
-		{normal = load("res://sprites/enemies/blob.png"), hurt = load("res://sprites/enemies/blobHurt.png"), dead = load("res://sprites/enemies/blobDead.png"),
+	
+	var enemies := [
+		{normal = {standing = "res://sprites/enemies/blob.png", hurt = "res://sprites/enemies/blobHurt.png", dead = "res://sprites/enemies/blobDead.png"},
+		shiny = {standing = "res://sprites/enemies/blob-shiny.png", hurt = "res://sprites/enemies/blob-shinyHurt.png", dead = "res://sprites/enemies/blob-shinyDead.png"},
 		offset = 0, collision = createShape(82, 70, 0)},
-		{normal = load("res://sprites/enemies/ghost.png"), hurt = load("res://sprites/enemies/ghostHurt.png"), dead = load("res://sprites/enemies/ghostDead.png"),
-		offset = -20, collision = createShape(76, 96, -2)},
-		{normal = load("res://sprites/enemies/skeleton.png"), hurt = load("res://sprites/enemies/skeletonHurt.png"), dead = load("res://sprites/enemies/skeletonHurt.png"),
-		offset = -10, collision = createShape(42, 77, 10)},
+		{normal = {standing = "res://sprites/enemies/ghost.png", hurt = "res://sprites/enemies/ghostHurt.png", dead = "res://sprites/enemies/ghostDead.png"},
+		shiny = false, offset = -20, collision = createShape(76, 96, -2)},
+		{normal = {standing = "res://sprites/enemies/skeleton.png", hurt = "res://sprites/enemies/skeletonHurt.png", dead = "res://sprites/enemies/skeletonHurt.png"},
+		shiny = false, offset = -10, collision = createShape(42, 77, 10)},
 	]
-	enemy_sprite = enemies.pick_random()
+	
+	var enemy = enemies.pick_random()
+	var sprites = enemy.shiny if typeof(enemy.shiny) == TYPE_DICTIONARY and randi() % 4096 == 4095 else enemy.normal
+	for sprite in sprites:
+		sprites[sprite] = load(sprites[sprite])
+	
+	enemy_sprite = {
+		standing = sprites.standing,
+		hurt = sprites.hurt,
+		dead = sprites.dead,
+		offset = enemy.offset,
+		collision = enemy.collision,
+	}
 	
 	var personalities := ["plain", "coward", "persistent", "caring"]
 	personality = personalities.pick_random()
@@ -77,7 +91,7 @@ func _ready():
 	
 	var sprite := Sprite2D.new()
 	sprite.name = "Sprite"
-	sprite.texture = enemy_sprite.normal
+	sprite.texture = enemy_sprite.standing
 	add_child(sprite)
 	add_child(enemy_sprite.collision)
 	global_position = Vector2(-500, 214 + enemy_sprite.offset)
@@ -147,7 +161,9 @@ func _input(ev):
 		if ev.pressed and mouse_on_sprite and health > 0 and not fleeing:
 			$SoundHit.play()
 			player_target.emit(self)
-			health -= PlayerVariables.level
+			
+			var effects = PlayerVariables.tap_effects.reduce(func(a, b): return a + b)
+			health -= PlayerVariables.level * (effects if effects else 1)
 			if "Envy's Blood" in PlayerVariables.misc_effects:
 				health -= floor(PlayerVariables.gold * 0.01)
 			PlayerVariables.gain_experience(max(1, floor(1 * (max_health / 25))))
@@ -158,7 +174,7 @@ func _input(ev):
 			
 			await get_tree().create_timer(0.2).timeout
 			if click_time == latest_click and health > 0 and not fleeing and not fled_once:
-				$Sprite.texture = enemy_sprite.get("normal")
+				$Sprite.texture = enemy_sprite.get("standing")
 
 func heal(enemy: Area2D, amount: int):
 	healing = true

@@ -10,7 +10,7 @@ const things_to_save_and_load = [
 	"max_equipped_swords", "swords"
 ]
 const items_properties_to_save_and_load = [
-	"i_name", "price", "current_dps", "dps", "level", "equipped", "duration_left"
+	"i_name", "price", "current_dps", "dps", "level", "level_multi", "equipped", "duration_left"
 ]
 
 func _ready():
@@ -126,7 +126,12 @@ func load_game():
 				var item_data = items.filter(func(i): return i.i_name == item.i_name)
 				if len(item_data):
 					item_data = item_data[0]
-					item[prprty] = item_data[prprty]
+					if item_data.get(prprty) != null:
+						item[prprty] = item_data[prprty]
+					else:
+						print("(LOAD_GAME FUNCTION) Property `%s` in %s didn't exist in save file" % [
+							prprty, item_data.i_name
+						])
 	
 	return "Welcome back!"
 

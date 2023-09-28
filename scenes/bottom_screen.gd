@@ -17,16 +17,28 @@ var items = [
 	"i_description": "Shines like blood. Is it even made with Ruby?"},
 	{"category": "swords", "price": 3000, "dps": 60, "level_multi": 5, "i_name": "Fire Sword",
 	"i_description": "A magical sword made of fire. Useful to cook some skeletons."},
-	{"category": "swords", "price": 12000, "dps": 150, "level_multi": 6, "i_name": "Sapphire Sword",
+	{"category": "swords", "price": 11037, "dps": 135, "level_multi": 6, "i_name": "Sapphire Sword",
 	"i_description": "Infused with magic, this sword shoots waves."},
-	{"category": "swords", "price": 24000, "dps": 220, "level_multi": 7, "i_name": "Ice Sword",
+	{"category": "swords", "price": 23500, "dps": 240, "level_multi": 7, "i_name": "Ice Sword",
 	"i_description": "Makes the coins your foes turn into become almost too cold to pick up."},
 	{"category": "swords", "price": 40000, "dps": 400, "level_multi": 8, "i_name": "VERY Sharp Sword",
 	"i_description": "Really cool-looking, but its blade is so edgy it renders any sheath useless..."},
 	{"category": "swords", "price": 100000, "dps": 1000, "level_multi": 9, "i_name": "Titan Sword",
 	"i_description": "You stole this sword from a mighty Titan. Well done."},
-	{"category": "swords", "price": 150000, "dps": 1250, "level_multi": 10, "i_name": "Legendary Sword",
+	{"category": "swords", "price": 180000, "dps": 1800, "level_multi": 10, "i_name": "Legendary Sword",
 	"i_description": "Rumoured to be hidden in the Dark Forest's depths, it turns out those rumours were accurate."},
+	{"category": "swords", "price": 200000, "dps": 3000, "level_multi": 37, "i_name": "Spectral Sword",
+	"i_description": "PRACTICALLY UNUPGRADABLE due to its nature, but would it ever need upgrades anyway?"},
+	{"category": "swords", "price": 275000, "dps": 2750, "level_multi": 12, "i_name": "King's Gift",
+	"i_description": "You've defended a kingdom from the Skeleton Army, your heroism did not go unrewarded."},
+	{"category": "swords", "price": 400000, "dps": 5000, "level_multi": 14, "i_name": "Earth Slayer",
+	"i_description": "Said to have been sent from the skies to Earth, thereby scarring the planet."},
+	{"category": "swords", "price": 750000, "dps": 8000, "level_multi": 16, "i_name": "Dwarves' Gem",
+	"i_description": "Forged by the best forgers in the deepest depths of the planet with the best materials."},
+	{"category": "swords", "price": 1400000, "dps": 16000, "level_multi": 18, "i_name": "The Gods' Demise",
+	"i_description": "Specifically created to end the rule of the Gods, once and for all."},
+	{"category": "swords", "price": 3000000, "dps": 40000, "level_multi": 20, "i_name": "Void Blade",
+	"i_description": "It is said to have come from another galaxy and to hold the same power as a black hole."},
 	
 	{"category": "scrolls", "price": 200, "i_name": "Sword Wielding",
 	"i_description": "Learn to wield more swords at once!",
@@ -34,6 +46,14 @@ var items = [
 	{"category": "scrolls", "price": 500, "i_name": "Practicing Smarter",
 	"i_description": "Learn to gain 50% more experience!",
 	"effect": func(): PlayerVariables.xp_effects.push_front(1.5)},
+	{"category": "scrolls", "price": 1250, "i_name": "Strength",
+	"i_description": "Learn to deal 400% more damage when tapping enemies!",
+	"effect": func(): PlayerVariables.tap_effects.push_front(4)},
+	{"category": "scrolls", "price": 1875, "i_name": "Upgrade Easily",
+	"i_description": "Learn to be able to upgrade any sword more easily level-wise!",
+	"effect": func(): for sword in find_children("Item*", "", true, false).filter(func(i): return i.category == "swords"):
+		sword.level_multi = max(1, sword.level_multi - 1)
+		},
 	
 	{"category": "potions", "level_to_show": 0, "price": 2000, "duration": 15 * 60, "i_name": "Potion of Experience",
 	"i_description": "Doubles the XP you gain from monsters for 15 minutes!",
@@ -106,7 +126,7 @@ func _ready():
 			
 			# Cheat for vertical scrollbar
 			separator_v.name = "Separator_%s-vertical" % cat["name"]
-			separator_v.texture.set_height(50 + (len(filtered_items) * 10))
+			separator_v.texture.set_height(50 + (len(filtered_items) * 12))
 			shop.find_child("VContainer", true, false).add_child(separator_v)
 
 func _process(_delta):
