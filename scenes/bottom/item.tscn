@@ -27,6 +27,14 @@ texture_pressed = ExtResource("2_kfpn4")
 texture_disabled = ExtResource("3_0rjeu")
 script = ExtResource("4_dx3o4")
 
+[node name="Progress" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 65.0
+mouse_filter = 1
+value = 50.0
+show_percentage = false
+
 [node name="Name" type="Label" parent="."]
 layout_mode = 0
 offset_left = 122.0
@@ -77,6 +85,7 @@ layout_mode = 0
 offset_left = 305.0
 offset_right = 440.0
 offset_bottom = 65.0
+mouse_default_cursor_shape = 2
 keep_pressed_outside = true
 texture_normal = ExtResource("8_y3pik")
 texture_pressed = ExtResource("9_epjln")

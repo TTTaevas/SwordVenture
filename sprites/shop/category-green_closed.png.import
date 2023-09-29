@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvloyjjmu7vv2"
-path="res://.godot/imported/category_closed.png-cff090bf894e4d9f72ab30b0093d71c8.ctex"
+uid="uid://dfsulsqfp5ela"
+path="res://.godot/imported/category-green_closed.png-c47571dfe1f0a58d20fc98d4c04d53c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/shop/category_closed.png"
-dest_files=["res://.godot/imported/category_closed.png-cff090bf894e4d9f72ab30b0093d71c8.ctex"]
+source_file="res://sprites/shop/category-green_closed.png"
+dest_files=["res://.godot/imported/category-green_closed.png-c47571dfe1f0a58d20fc98d4c04d53c0.ctex"]
 
 [params]
 

@@ -10,6 +10,11 @@ func _ready():
 		$Description.text = description
 
 func _process(_delta):
+	if disabled:
+		mouse_default_cursor_shape = Control.CURSOR_ARROW
+	else:
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		
 	$Action.size = $Action.get_theme_font("font").get_string_size($Action.text)
 	$Description.size = $Description.get_theme_font("font").get_string_size($Description.text)
 	$Action.position.x = (size.x - $Action.size.x) / 2

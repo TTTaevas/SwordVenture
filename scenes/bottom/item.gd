@@ -45,11 +45,19 @@ func _process(delta):
 			duration_left -= 1
 			if duration_left <= 0:
 				expired_effect.call()
-		
+	
+	$Progress.value = min(100, (PlayerVariables.gold / price) * 100)
 	if PlayerVariables.gold < price or duration_left > 0 or (level * level_multi) + 1 > PlayerVariables.level:
 		disabled = true
 	elif disabled == true:
 		disabled = false
+	
+	if disabled:
+		mouse_default_cursor_shape = Control.CURSOR_ARROW
+		$Progress.show()
+	else:
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		$Progress.hide()
 	
 	if category != "swords" or level <= 0:
 		$Equip.hide()

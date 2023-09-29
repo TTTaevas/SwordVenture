@@ -9,6 +9,13 @@ func _ready():
 	name = "Cat_button_%s" % cat_name
 	$Icon.texture = load(icon if icon != "" else "res://sprites/icons/coin.png")
 	normal_position = $Icon.position.y
+	
+	if cat_name == "swords":
+		texture_normal = load("res://sprites/shop/category-green_closed.png")
+		texture_pressed = load("res://sprites/shop/category-green_open.png")
+	elif cat_name == "scrolls":
+		texture_normal = load("res://sprites/shop/category-red_closed.png")
+		texture_pressed = load("res://sprites/shop/category-red_open.png")
 
 func _process(_delta):
 	$Icon.position.y = normal_position - 5 if button_pressed else normal_position
