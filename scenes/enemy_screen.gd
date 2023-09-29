@@ -49,7 +49,8 @@ func pacification(method, e):
 			PlayerVariables.enemies_to_progress = 10 if randi() % 101 < 100 else 25
 		else:
 			for i in enemies:
-				i.free()
+				if is_instance_valid(i):
+					i.free()
 		
 		spawn_enemy()
 

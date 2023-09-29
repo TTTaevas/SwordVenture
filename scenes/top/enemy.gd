@@ -79,7 +79,7 @@ func _ready():
 		health *= 1.3
 	elif personality == "caring":
 		health *= 0.7
-	health = round(health)
+	health = max(1.0, round(health))
 	max_health = health
 	
 	var health_bar = healthbar.instantiate()

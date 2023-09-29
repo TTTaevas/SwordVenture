@@ -6,6 +6,7 @@ var callable: Callable
 
 func _ready():
 	if action != "" and description != "":
+		name = "%sButton" % action
 		$Action.text = action
 		$Description.text = description
 

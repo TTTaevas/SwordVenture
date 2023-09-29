@@ -6,26 +6,24 @@ var game_difficulty := 1.0
 var misc_effects = []
 var tap_effects = []
 
-var level := 1
+var level := 100
 var experience := 0.0
-var max_experience := 50 * game_difficulty
+var max_experience := 50.0 * game_difficulty
 var xp_effects := []
 func gain_experience(xp):
 	for effect in xp_effects:
 		xp *= effect
 	
-	while xp > 0:
-		experience += 1 / game_difficulty
-		if experience >= max_experience:
-			level += 1
-			experience = 0
-			max_experience = round(max_experience * 1.4)
-			var sound = get_parent().find_child("SoundLevelUp", true, false)
-			if is_instance_valid(sound):
-				sound.play()
-		xp -= 1
+	experience += xp / game_difficulty
+	if experience >= max_experience:
+		level += 1
+		experience -= max_experience
+		max_experience = round(max_experience * 1.4)
+		var sound = get_parent().find_child("SoundLevelUp", true, false)
+		if is_instance_valid(sound):
+			sound.play()
 
-var gold := 0.0
+var gold := 1000000.0
 var gold_effects := []
 func gain_gold(g):
 	for effect in gold_effects:

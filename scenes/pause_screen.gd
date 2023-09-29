@@ -64,6 +64,11 @@ func _process(_delta):
 	
 	$Menu.position = $Background.position
 	$Menu.size = $Background.size
+	
+	if PlayerVariables.enemies_killed >= PlayerVariables.enemies_to_progress:
+		$Menu/Container.find_child("SaveButton", false, false).disabled = true
+	else:
+		$Menu/Container.find_child("SaveButton", false, false).disabled = false
 
 func _input(event):
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:

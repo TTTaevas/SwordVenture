@@ -17,7 +17,7 @@ func _process(_delta):
 			i.position.x = 0
 
 func animate(max_time: float, normal_speed: float, enemies):
-	var elements := find_children("", "TextureRect")
+	var background_elements := find_children("", "TextureRect")
 	var time := randf_range(0.90, max_time)
 	var speed := normal_speed + (time / 2)
 	
@@ -26,13 +26,18 @@ func animate(max_time: float, normal_speed: float, enemies):
 	while time > 0:
 		await get_tree().create_timer(0.01).timeout
 		
-		for i in len(elements):
-			var e = elements[i]
+		for index in len(background_elements):
+			var e = background_elements[index]
 			@warning_ignore("integer_division")
-			e.position.x -= speed / ((i / 2) + 1)
+			e.position.x -= speed / ((index / 2) + 1)
 		
-		for i in enemies:
-			i.position.x -= speed
+		var freed_enemies = enemies.filter(func(e): return not is_instance_valid(e))
+		if len(freed_enemies):
+			print("(BACKGROUND ANIMATION) Removing the enemies array as last resort to prevent crash!")
+			enemies = []
+		
+		for enemy in enemies:
+			enemy.position.x -= speed
 		
 		if time > 0.8:
 			speed += 0.3
@@ -50,7 +55,8 @@ func animate(max_time: float, normal_speed: float, enemies):
 			var red = $Light.color.r - (speed / 20000)
 			$Light.set_color(Color(red, $Light.color.g, $Light.color.b, $Light.color.a))
 	
-	for i in enemies:
-		i.free()
+	for enemy in enemies:
+		if is_instance_valid(enemy):
+			enemy.free()
 	
 	return true

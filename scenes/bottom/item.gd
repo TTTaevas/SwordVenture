@@ -44,6 +44,7 @@ func _process(delta):
 		if duration_left > 0:
 			duration_left -= 1
 			if duration_left <= 0:
+				level = 0
 				expired_effect.call()
 	
 	$Progress.value = min(100, (PlayerVariables.gold / price) * 100)
@@ -119,6 +120,7 @@ func _process(delta):
 
 func _pressed():
 	$SoundBuy.play()
+	game_clock = 0
 	level += 1
 	PlayerVariables.gold -= price
 	

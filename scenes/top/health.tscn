@@ -14,6 +14,7 @@ font_color = Color(0, 0, 0, 1)
 offset_right = 183.0
 offset_bottom = 24.0
 value = 50.0
+nine_patch_stretch = true
 texture_under = ExtResource("1_ycd3f")
 texture_progress = ExtResource("2_qn6k8")
 script = ExtResource("3_1nh6o")
