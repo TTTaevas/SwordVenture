@@ -2,9 +2,9 @@ extends Node2D
 
 signal player_target
 var enemy_scene := preload("res://scenes/top/enemy.tscn")
-var enemies_left := 0
 
 var animation_ongoing := false
+var went_for_fled_enemy := false
 
 func _ready():
 	spawn_enemy()
@@ -14,8 +14,8 @@ func _ready():
 	$Enemies_left.position.y = p
 
 func _process(_delta):
-	enemies_left = PlayerVariables.enemies_to_progress - PlayerVariables.enemies_killed
-	$Enemies_left.text = "%s enem%s left!" % [PlayerVariables.displayNumber(enemies_left), "ies" if enemies_left > 1 else "y"]
+	var ene_left = PlayerVariables.enemies_to_progress - PlayerVariables.enemies_killed
+	$Enemies_left.text = "%s enem%s left!" % [PlayerVariables.displayNumber(ene_left), "ies" if ene_left > 1 else "y"]
 	$Zone.text = "Zone %s" % PlayerVariables.displayNumber(PlayerVariables.zone)
 	
 	$Zone.size = $Zone.get_theme_font("font").get_string_size($Zone.text)
@@ -24,6 +24,7 @@ func _process(_delta):
 	$Enemies_left.position.x = $Zone.position.x + $Zone.size.x + 40
 
 func pacification(method, e):
+	went_for_fled_enemy = false
 	if method == "death":
 		PlayerVariables.enemies_killed += 1
 		PlayerVariables.gain_gold(max(1, int(e.max_health / 10)))
@@ -36,7 +37,7 @@ func pacification(method, e):
 		PlayerVariables.enemies_fled.push_back(enemy)
 		
 	var enemies := find_children("enemy_*", "", false, false)
-	if enemies.size() <= 0 or enemies.all(func(enemy): return (enemy.health <= 0 or enemy.fleeing)):
+	if enemies.size() <= 0 or enemies.all(func(enemy): return (enemy.health <= 0 or enemy.fled)):
 		await get_tree().create_timer(0.2).timeout
 
 		if PlayerVariables.enemies_killed >= PlayerVariables.enemies_to_progress:
@@ -56,13 +57,18 @@ func pacification(method, e):
 
 func spawn_enemy():
 	var enemies := find_children("enemy_*", "", false, false)
-	if PlayerVariables.enemies_fled.size() >= 1 and PlayerVariables.enemies_fled.size() + enemies.size() >= enemies_left:
+	if PlayerVariables.enemies_fled.size() >= 1 and (randi() % 4 == 3 or (
+		PlayerVariables.enemies_fled.size() + enemies.size() >= PlayerVariables.enemies_to_progress - PlayerVariables.enemies_killed
+	)):
 		animation_ongoing = true
-		await find_child("Background").animate(1.0, 50.0, enemies)
+		if not went_for_fled_enemy:
+			await find_child("Background").animate(1.0, 50.0, enemies)
+		went_for_fled_enemy = true
 		animation_ongoing = false
 		
 		var enemy = PlayerVariables.enemies_fled.front()
 		enemy.fleeing = false
+		enemy.fled = false
 		enemy.panic = 0
 		enemy.shake = 0
 		enemy.connect("pacification", pacification)
@@ -78,7 +84,8 @@ func spawn_enemy():
 	
 	var max_enemies = floor(get_viewport_rect().size.x / 200)
 	enemies = find_children("enemy_*", "", false, false)
-	if randi() % 5 == 4 and enemies.size() < min(max_enemies, enemies_left):
+	var enemies_left = PlayerVariables.enemies_to_progress - PlayerVariables.enemies_killed
+	if randi() % 5 == 4 and enemies.size() < min(max_enemies, (enemies_left if not enemies_left <= 0 else max_enemies)):
 		spawn_enemy()
 
 func relay(target: Area2D):

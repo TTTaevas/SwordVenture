@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://wjr5471kp4hn"]
+[gd_scene load_steps=6 format=3 uid="uid://wjr5471kp4hn"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_5u8fi"]
 [ext_resource type="PackedScene" uid="uid://f06seee5et7e" path="res://scenes/enemy_screen.tscn" id="1_gl7b4"]
 [ext_resource type="PackedScene" uid="uid://pdloxy5lmu86" path="res://scenes/bottom_screen.tscn" id="2_1ybcm"]
 [ext_resource type="PackedScene" uid="uid://dbllvt3yy18so" path="res://scenes/pause_screen.tscn" id="4_kjpoq"]
+[ext_resource type="AudioStream" uid="uid://jjysv6hyh2px" path="res://sounds/ascension.wav" id="5_s1gi3"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5u8fi")
@@ -16,3 +17,9 @@ position = Vector2(0, 298)
 
 [node name="Pause_screen" parent="." instance=ExtResource("4_kjpoq")]
 position = Vector2(744, 17)
+
+[node name="Ascend_light" type="DirectionalLight2D" parent="."]
+energy = 0.0
+
+[node name="Ascend_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_s1gi3")

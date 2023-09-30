@@ -16,6 +16,9 @@ func _ready():
 	elif cat_name == "scrolls":
 		texture_normal = load("res://sprites/shop/category-red_closed.png")
 		texture_pressed = load("res://sprites/shop/category-red_open.png")
+	elif cat_name == "magic":
+		texture_normal = load("res://sprites/shop/category-blue_closed.png")
+		texture_pressed = load("res://sprites/shop/category-blue_open.png")
 
 func _process(_delta):
 	$Icon.position.y = normal_position - 5 if button_pressed else normal_position

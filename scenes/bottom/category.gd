@@ -29,3 +29,5 @@ func _process(_delta):
 		Active potions: %s" % [
 			len(find_children("Item*", "", true, false).filter(func(p): return p.level > 0)),
 		]
+	elif category == "magic":
+		$Container/VContainer/Stats.text = "Ascensions make the game easier, at the cost of resetting your progress!"

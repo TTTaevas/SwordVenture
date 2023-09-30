@@ -36,6 +36,9 @@ func _ready():
 	elif category == "scrolls":
 		self.texture_normal = load("res://sprites/shop/button-red.png")
 		self.texture_pressed = load("res://sprites/shop/button-red-pressed.png")
+	elif category == "magic":
+		self.texture_normal = load("res://sprites/shop/button-blue.png")
+		self.texture_pressed = load("res://sprites/shop/button-blue-pressed.png")
 
 func _process(delta):
 	game_clock += delta
@@ -140,6 +143,9 @@ func _pressed():
 	
 	elif category == "scrolls":
 		price = ceil(price * 20.50)
+		effect.call()
+	
+	elif category == "magic":
 		effect.call()
 
 func _on_equip_pressed():

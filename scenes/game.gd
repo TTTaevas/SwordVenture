@@ -35,16 +35,16 @@ func damage_with_sword(timeout: float, damage: float):
 	if damage != null and enemies.size() > 0:
 		if !is_instance_valid(sword_target) or sword_target.fleeing or sword_target.found_dead:
 			sword_target = enemies[0]
-			how_long_sword_target = 1
+			how_long_sword_target = 1.0
 		elif how_long_sword_target > 15:
 			var other_enemies = enemies.filter(func(a): return a.name != sword_target.name)
 			sword_target = other_enemies.pick_random() if len(other_enemies) > 0 else sword_target
-			how_long_sword_target = 1
+			how_long_sword_target = 1.0
 		else:
-			how_long_sword_target += 1 / PlayerVariables.attacks_per_second
+			how_long_sword_target += 1.0 / PlayerVariables.attacks_per_second
 		
 		(sword_target if randi() % 3 < 30 else enemies.pick_random()).health -= damage
 
 func choose_player_target(target: Area2D):
 	sword_target = target
-	how_long_sword_target = 1
+	how_long_sword_target = 1.0

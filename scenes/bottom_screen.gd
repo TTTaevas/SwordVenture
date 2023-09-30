@@ -4,6 +4,7 @@ var categories = [
 	{"name": "swords", "sprite": "res://sprites/icons/sword.png", "required_level": 2},
 	{"name": "scrolls", "sprite": "res://sprites/icons/scroll.png", "required_level": 5},
 	{"name": "potions", "sprite": "res://sprites/icons/potion.png", "required_level": 10},
+	{"name": "magic", "sprite": "res://sprites/icons/spark.png", "required_level": 30},
 ]
 
 var items = [
@@ -49,7 +50,7 @@ var items = [
 	{"category": "scrolls", "price": 1250, "i_name": "Strength",
 	"i_description": "Learn to deal 400% more damage when tapping enemies!",
 	"effect": func(): PlayerVariables.tap_effects.push_front(4)},
-	{"category": "scrolls", "price": 1875, "i_name": "Upgrade Easily",
+	{"category": "scrolls", "price": 1875, "i_name": "Smithing Skills",
 	"i_description": "Learn to be able to upgrade any sword more easily level-wise!",
 	"effect": func(): for sword in find_children("Item*", "", true, false).filter(func(i): return i.category == "swords"):
 		sword.level_multi = max(1, sword.level_multi - 1)
@@ -67,6 +68,10 @@ var items = [
 	"i_description": "When tapping an enemy, inflict an additional amount of damage worth 1% of your gold, for 30 minutes!",
 	"effect": func(): PlayerVariables.misc_effects.push_back("Envy's Blood"),
 	"expired_effect": func(): PlayerVariables.misc_effects.remove_at(PlayerVariables.gold_effects.find("Envy's Blood"))},
+	
+	{"category": "magic", "price": 250000000 * (((PlayerVariables.ascends) * 50) + 1), "i_name": "Ascend",
+	"i_description": "Reset your progress, but make the game easier to go through!",
+	"effect": PlayerVariables.ascend},
 ]
 
 var category_button_scene = preload("res://scenes/bottom/category_button.tscn")
@@ -167,6 +172,13 @@ func _process(_delta):
 		
 		if (button.is_visible() == false and PlayerVariables.level >= button.required_level):
 			button.show()
+			var shortcut = Shortcut.new()
+			var key_normal = InputEventKey.new()
+			key_normal.set_physical_keycode(49 + e)
+			var key_pad = InputEventKey.new()
+			key_pad.set_physical_keycode(4194439 + e)
+			shortcut.set_events([key_normal, key_pad])
+			button.set_shortcut(shortcut)
 		
 		var x = $ShopBackground.position.x * (e + 1)
 		if len(categories) * button.size.x >= $ShopBackground.size.x - 10 and e != 0:

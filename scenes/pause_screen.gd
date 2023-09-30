@@ -4,7 +4,7 @@ var paused := false
 var button_scene := preload("res://scenes/menu_button.tscn")
 
 const things_to_save_and_load = [
-	"game_difficulty", "misc_effects", "level", "experience", "max_experience", "xp_effects",
+	"game_difficulty", "ascends", "misc_effects", "level", "experience", "max_experience", "xp_effects",
 	"gold", "gold_effects",
 	"zone", "enemies_to_progress", "enemies_killed", "default_hp",
 	"max_equipped_swords", "swords"
@@ -71,6 +71,8 @@ func _process(_delta):
 		$Menu/Container.find_child("SaveButton", false, false).disabled = false
 
 func _input(event):
+	if PlayerVariables.ascending:
+		return
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		if paused == false:
 			show()
@@ -116,7 +118,10 @@ func load_game():
 		return "Failed to load..."
 	
 	for thing in things_to_save_and_load:
-		PlayerVariables[thing] = data[thing]
+		if data.get(thing) != null:
+			PlayerVariables[thing] = data[thing]
+		else:
+			print("(LOAD_GAME FUNCTION) Variable `%s` didn't exist in save file" % thing)
 	
 	var game = get_tree().root.find_child("Game", false, false)
 	if is_instance_valid(game):

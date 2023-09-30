@@ -20,6 +20,7 @@ var latest_click := Time.get_unix_time_from_system()
 var panic := 0
 var shake := 0
 var fleeing := false
+var fled := false
 var fled_once := false
 var healing := false
 
@@ -154,6 +155,7 @@ func _process(_delta):
 				await get_tree().create_timer(0.01).timeout
 				position.x += speed
 				speed += 0.7
+			fled = true
 			pacification.emit("flee", self)
 
 func _input(ev):
