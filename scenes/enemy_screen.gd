@@ -20,7 +20,7 @@ func _process(_delta):
 	
 	$Zone.size = $Zone.get_theme_font("font").get_string_size($Zone.text)
 	$Enemies_left.size = $Enemies_left.get_theme_font("font").get_string_size($Enemies_left.text)
-	$Zone.position.x = (get_viewport_rect().size.x / 2) - (($Zone.size.x + $Enemies_left.size.x + 40) / 2)
+	$Zone.position.x = ((get_viewport_rect().size.x / scale.x) / 2) - (($Zone.size.x + $Enemies_left.size.x + 40) / 2)
 	$Enemies_left.position.x = $Zone.position.x + $Zone.size.x + 40
 
 func pacification(method, e):

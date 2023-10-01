@@ -9,6 +9,11 @@ func _ready():
 	$Pause_screen.hide()
 
 func _process(delta):
+	var s = min(1.0, max(0.6, get_viewport_rect().size.y / 550))
+	$Enemy_screen.scale = Vector2(s, s)
+	$Bottom_screen.position.y = ($Enemy_screen/Background/Tiles.size.y + $Enemy_screen/Background.position.y) * $Enemy_screen.scale.y
+	$Bottom_screen/Background.size.y = (get_viewport_rect().size.y - $Bottom_screen.position.y)
+	
 	if not $Enemy_screen.is_connected("player_target", choose_player_target):
 		$Enemy_screen.connect("player_target", choose_player_target)
 	

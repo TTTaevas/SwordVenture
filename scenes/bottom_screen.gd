@@ -79,8 +79,6 @@ var category_scene = preload("res://scenes/bottom/category.tscn")
 var item_scene = preload("res://scenes/bottom/item.tscn")
 
 func _ready():
-	if get_parent():
-		position.y = 298
 	$Background.position = Vector2(0, 0)
 	
 	for cat in categories:
@@ -137,7 +135,6 @@ func _ready():
 func _process(_delta):
 	var screen := get_viewport_rect().size
 	$Background.size.x = screen.x
-	$Background.size.y = screen.y - 290
 	
 	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x
 	$Gold.text = "%s Gold" % PlayerVariables.displayNumber(PlayerVariables.gold)
