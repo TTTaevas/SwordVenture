@@ -53,8 +53,8 @@ func _process(_delta):
 	var screen := get_viewport_rect().size
 	
 	$Gray.size = screen
-	if screen.x < 1080:
-		$Border.position = screen / (6 if screen.y > 720 else 12)
+	if screen.x < 1080 or screen.y < 720:
+		$Border.position = screen / 12
 		$Border.size = (screen / $Border.scale) - ($Border.position * 4)
 	else:
 		$Border.size = Vector2(720 / $Border.scale.x, 480 / $Border.scale.y)
@@ -62,8 +62,10 @@ func _process(_delta):
 	$Background.position = Vector2($Border.position.x + 20, $Border.position.y + 20)
 	$Background.size = ($Border.size * $Border.scale) - Vector2(35, 35)
 	
+	var s = min(max(0.70, min($Border.size.x / 1080, $Border.size.y / 920)), 1.00)
 	$Menu.position = $Background.position
-	$Menu.size = $Background.size
+	$Menu.scale = Vector2(s, s)
+	$Menu.size = $Background.size / s
 	
 	if PlayerVariables.enemies_killed >= PlayerVariables.enemies_to_progress:
 		$Menu/Container.find_child("SaveButton", false, false).disabled = true
@@ -143,6 +145,7 @@ func load_game():
 							prprty, item_data.i_name
 						])
 	
+	PlayerVariables.enemies_fled = []
 	return "Welcome back!"
 
 func screen_game():

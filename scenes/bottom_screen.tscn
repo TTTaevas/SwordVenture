@@ -34,9 +34,12 @@ text = "0 Gold
 label_settings = ExtResource("2_n1mm5")
 
 [node name="GoldSprite" type="Sprite2D" parent="."]
-position = Vector2(320, 15)
+position = Vector2(116, 12)
 scale = Vector2(0.035, 0.035)
 texture = ExtResource("3_kf4fc")
+
+[node name="ShopBackground" type="ColorRect" parent="."]
+color = Color(0.34902, 0.184314, 0.203922, 1)
 
 [node name="ShopBorder" type="NinePatchRect" parent="."]
 offset_left = 162.0
@@ -49,10 +52,3 @@ patch_margin_left = 50
 patch_margin_top = 50
 patch_margin_right = 50
 patch_margin_bottom = 50
-
-[node name="ShopBackground" type="ColorRect" parent="."]
-offset_left = 44.0
-offset_top = 49.0
-offset_right = 94.0
-offset_bottom = 99.0
-color = Color(0.34902, 0.184314, 0.203922, 1)

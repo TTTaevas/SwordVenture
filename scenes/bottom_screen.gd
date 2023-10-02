@@ -136,26 +136,24 @@ func _process(_delta):
 	var screen := get_viewport_rect().size
 	$Background.size.x = screen.x
 	
-	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x
-	$Gold.text = "%s Gold" % PlayerVariables.displayNumber(PlayerVariables.gold)
-	$Gold.size = $Gold.get_theme_font("font").get_string_size($Gold.text)
-	$Gold.position.x = (screen.x / 2) - ($Gold.size.x / 2) - (gs_width / 2)
-	$GoldSprite.position.x = $Gold.position.x + $Gold.size.x + 12
-	
-	var s = min(max(0.65, $Background.size.x / 1920), 1)
+	var x = min(max(0.20, screen.x / 1920), 1.00)
+	var y = min(max(0.20, screen.y / 1920), 1.00)
+	var s = min(max(0.20, min(x, y)), 1.00)
 	$ShopBorder.scale = Vector2(s, s)
-	$ShopBorder.size = ($Background.size / $ShopBorder.scale) - Vector2(100, 100)
+	$ShopBorder.size = ($Background.size / $ShopBorder.scale) - Vector2(50, 100 / (y + 0.2))
 	$ShopBorder.position.x = ($Background.size.x / 2) - (($ShopBorder.size.x * $ShopBorder.scale.x) / 2)
-	$ShopBorder.position.y = 50
+	$ShopBorder.position.y = 20 + (s * 75)
 	
 	var i = $ShopBorder.patch_margin_left
-	$ShopBackground.size = ($ShopBorder.size - Vector2(i * 2, i * 2)) * $ShopBorder.scale
-	$ShopBackground.position = ($ShopBorder.position) + Vector2(i, i) * $ShopBorder.scale
+	$ShopBackground.size = (($ShopBorder.size - Vector2(i * 2, i * 2)) * $ShopBorder.scale) + Vector2(2, 2)
+	$ShopBackground.position = (($ShopBorder.position) + Vector2(i, i) * $ShopBorder.scale) - Vector2(2, 2)
 	
+	var magic_number = min(max(min(x * 3.5, y * 3.0), 0.75), 1)
 	var shops = find_children("Category_*", "Control", true, false)
 	for shop in shops.filter(func(shop): return shop.is_visible()):
 		var container = shop.find_child("Container")
-		container.size = $ShopBackground.size
+		container.size = $ShopBackground.size / magic_number
+		container.scale = Vector2(magic_number, magic_number)
 		container.position = $ShopBackground.position
 		
 	for shop in shops.filter(func(shop): return !shop.is_visible()):
@@ -163,32 +161,29 @@ func _process(_delta):
 		container.size = Vector2(0, 0)
 		container.position = Vector2(-1920, -1920)
 	
-	for e in len(categories):
-		var cat = categories[e]
+	for index in len(categories):
+		var cat = categories[index]
 		var button = find_child("Cat_button_%s" % cat["name"], false, false)
 		
 		if (button.is_visible() == false and PlayerVariables.level >= button.required_level):
 			button.show()
 			var shortcut = Shortcut.new()
 			var key_normal = InputEventKey.new()
-			key_normal.set_physical_keycode(49 + e)
+			key_normal.set_physical_keycode(49 + index)
 			var key_pad = InputEventKey.new()
-			key_pad.set_physical_keycode(4194439 + e)
+			key_pad.set_physical_keycode(4194439 + index)
 			shortcut.set_events([key_normal, key_pad])
 			button.set_shortcut(shortcut)
 		
-		var x = $ShopBackground.position.x * (e + 1)
-		if len(categories) * button.size.x >= $ShopBackground.size.x - 10 and e != 0:
-			x -= (button.size.x / 2) * e
-		button.position.x = x
+		button.position.x = ($ShopBackground.position.x + 2) + ((button.size.x + 5) * index) * min((x * 3), 2)
 		button.position.y = $ShopBorder.position.y - 18 + (($ShopBorder.scale.y - 0.75) * 18)
 		
 		var shop_container = shops.filter(func(s): return s.category == cat["name"])[0].find_child("VContainer", true, false)
 		var shop_articles = shop_container.get_children().filter(func(a): return "Separator" not in a.name)
-		for index in len(shop_articles):
-			var article = shop_articles[index]
+		for article_index in len(shop_articles):
+			var article = shop_articles[article_index]
 			article.position.x = 10
-			article.position.y = 10 + (index * (article.size.y * 1.2))
+			article.position.y = 10 + (article_index * (article.size.y * 1.2))
 		
 		var shop_items = shop_articles.filter(func(a): return "Item" in a.name)
 		for item in shop_items:
@@ -196,3 +191,20 @@ func _process(_delta):
 				item.show()
 			else:
 				item.hide()
+	
+	$Gold.text = "%s Gold" % PlayerVariables.displayNumber(PlayerVariables.gold)
+	$Gold.size = $Gold.get_theme_font("font").get_string_size($Gold.text)
+	var gs_width = $GoldSprite.texture.get_width() * $GoldSprite.scale.x
+	var gold_x = (screen.x / 2) - ($Gold.size.x / 2) - (gs_width / 2)
+	
+	var buttons = find_children("Cat_button*", "", false, false).filter(func(b): return b.is_visible())
+	if len(buttons):
+		var btn = buttons[len(buttons) - 1]
+		var offset = abs(max(0, (btn.position.x + (btn.size.x)) - gold_x))
+		if offset < 5:
+			gold_x += abs(max(0, (btn.position.x + (btn.size.x)) - gold_x))
+		else:
+			gold_x = screen.x - gs_width - $Gold.size.x - 10
+	
+	$Gold.position.x = gold_x
+	$GoldSprite.position.x = $Gold.position.x + $Gold.size.x + 12

@@ -24,8 +24,11 @@ PlayerVariables="*res://scenes/player_variables.gd"
 
 [display]
 
-window/size/viewport_width=1280
+window/size/viewport_width=720
 window/size/viewport_height=720
+window/stretch/aspect="ignore"
+window/handheld/orientation=3
+window/vsync/vsync_mode=2
 
 [filesystem]
 
