@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://pdloxy5lmu86"]
+[gd_scene load_steps=9 format=3 uid="uid://pdloxy5lmu86"]
 
 [ext_resource type="Script" path="res://scenes/bottom_screen.gd" id="1_f157k"]
 [ext_resource type="LabelSettings" uid="uid://cpuux455m0mhe" path="res://font.tres" id="2_n1mm5"]
 [ext_resource type="Texture2D" uid="uid://dsurnabs8anjd" path="res://sprites/icons/coin.png" id="3_kf4fc"]
 [ext_resource type="Texture2D" uid="uid://dwj7nmugh8so0" path="res://sprites/shop/borders.png" id="4_ur28x"]
+[ext_resource type="FontFile" uid="uid://kr3d464f7640" path="res://NineteenNinetySix-lWzq.ttf" id="5_n0hn7"]
 
 [sub_resource type="Gradient" id="Gradient_xl7xx"]
 colors = PackedColorArray(0.227451, 0.113725, 0.12549, 1, 0.117647, 0.054902, 0.0666667, 1)
@@ -13,6 +14,11 @@ gradient = SubResource("Gradient_xl7xx")
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
 metadata/_snap_enabled = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_aryr3"]
+line_spacing = 2.0
+font = ExtResource("5_n0hn7")
+font_size = 20
 
 [node name="Bottom_screen" type="Node2D"]
 script = ExtResource("1_f157k")
@@ -52,3 +58,13 @@ patch_margin_left = 50
 patch_margin_top = 50
 patch_margin_right = 50
 patch_margin_bottom = 50
+
+[node name="Tip" type="Label" parent="."]
+offset_left = 52.0
+offset_top = 48.0
+offset_right = 635.0
+offset_bottom = 94.0
+text = "Press the Escape key to bring up the pause menu!
+From there, you are able to save and load your game!"
+label_settings = SubResource("LabelSettings_aryr3")
+horizontal_alignment = 1

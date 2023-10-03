@@ -29,7 +29,7 @@ func animate(max_time: float, normal_speed: float, enemies):
 		for index in len(background_elements):
 			var e = background_elements[index]
 			@warning_ignore("integer_division")
-			e.position.x -= speed / ((index / 2) + 1)
+			e.position.x -= speed / ((index / 2) + 1) * min(get_parent().scale.x * get_viewport_rect().size.x / 1000, 1)
 		
 		var freed_enemies = enemies.filter(func(e): return not is_instance_valid(e))
 		if len(freed_enemies):
@@ -37,7 +37,7 @@ func animate(max_time: float, normal_speed: float, enemies):
 			enemies = []
 		
 		for enemy in enemies:
-			enemy.position.x -= speed
+			enemy.position.x -= speed * min(get_parent().scale.x * get_viewport_rect().size.x / 1000, 1)
 		
 		if time > 0.8:
 			speed += 0.3

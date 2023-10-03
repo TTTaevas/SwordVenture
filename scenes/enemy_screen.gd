@@ -62,7 +62,7 @@ func spawn_enemy():
 	)):
 		animation_ongoing = true
 		if not went_for_fled_enemy:
-			await find_child("Background").animate(1.0, 50.0, enemies)
+			await find_child("Background").animate(1.0, 50.0 * min(get_viewport_rect().size.x / 500, 2), enemies)
 		went_for_fled_enemy = true
 		animation_ongoing = false
 		

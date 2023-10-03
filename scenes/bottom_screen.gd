@@ -146,7 +146,17 @@ func _process(_delta):
 	
 	var i = $ShopBorder.patch_margin_left
 	$ShopBackground.size = (($ShopBorder.size - Vector2(i * 2, i * 2)) * $ShopBorder.scale) + Vector2(2, 2)
-	$ShopBackground.position = (($ShopBorder.position) + Vector2(i, i) * $ShopBorder.scale) - Vector2(2, 2)
+	$ShopBackground.position = ($ShopBorder.position + (Vector2(i, i) * $ShopBorder.scale)) - Vector2(2, 2)
+	
+	$Tip.size = $Tip.get_theme_font("font").get_string_size($Tip.text)
+	var tip_scale = min(x * 2.5, 1)
+	$Tip.scale = Vector2(tip_scale, tip_scale)
+	$Tip.position.x = (screen.x / 2) - (($Tip.size.x * $Tip.scale.x) / 2)
+	$Tip.position.y = ($ShopBackground.position.y * $ShopBackground.scale.y) + 20
+	if len(find_children("Category_*", "Control", true, false).filter(func(shop): return shop.is_visible())):
+		$Tip.hide()
+	else:
+		$Tip.show()
 	
 	var magic_number = min(max(min(x * 3.5, y * 3.0), 0.75), 1)
 	var shops = find_children("Category_*", "Control", true, false)
